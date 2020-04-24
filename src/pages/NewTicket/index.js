@@ -5,7 +5,7 @@ import colors from '../../assets/var/colors'
 
 import styles from './styles';
 
-const NewTicket = () => {
+const NewTicket = ({ navigation }) => {
   return (
     <View style={styles.Container}>
         <View style={styles.BoxModelChamado}>
@@ -44,7 +44,9 @@ const NewTicket = () => {
 
             </View>
             <View style={styles.boxModelBtn}>
-                <TouchableOpacity>
+                <TouchableOpacity 
+                onPress={() => navigation.navigate('Confirmacao Chamado')}
+                >
                     <View style={styles.InputBtn}>
                         <Text style={styles.TextBtn}>Cadastrar</Text>
                     </View>

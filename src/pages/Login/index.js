@@ -5,7 +5,7 @@ import colors from '../../assets/var/colors'
 
 import styles from './styles';
 
-const Login = () => {
+const Login = ({ navigation }) => {
   return (
     <View style={styles.Container}>
         <View style={styles.BoxModelLogin}>
@@ -25,7 +25,9 @@ const Login = () => {
                 />
             </View>
             <View style={styles.boxModelBtn}>
-                <TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => navigation.navigate('Novo Chamado')}
+                >
                     <View style={styles.InputBtn}>
                         <Text style={styles.TextBtn}>Entrar</Text>
                     </View>

@@ -1,13 +1,16 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import Login from './src/pages/Login'
-import NewTicket from './src/pages/NewTicket'
+// import Login from './src/pages/Login'
+// import NewTicket from './src/pages/NewTicket'
+// import Confirmed from './src/pages/Confirmed'
+// import Map from './src/pages/Map'
+
+import Routes from './src/routes';
 
 export default function App() {
   return (
-    // <Login/>
-    <NewTicket />
+    <Routes />
   );
 }
 
