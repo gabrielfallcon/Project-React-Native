@@ -1,11 +1,14 @@
 import React from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import {useNavigation} from '@react-navigation/native'
 
 import colors from '../../assets/var/colors'
 
 import styles from './styles';
 
-const NewTicket = ({ navigation }) => {
+const NewTicket = () => {
+    const navigation = useNavigation();
+
   return (
     <View style={styles.Container}>
         <View style={styles.BoxModelChamado}>

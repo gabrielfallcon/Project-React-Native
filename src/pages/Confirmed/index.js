@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import {useNavigation} from '@react-navigation/native'
 
 import styles from './styles';
 
@@ -7,7 +8,9 @@ import styles from './styles';
 
 // import success from '../../assets/animations/sucess.json'
 
-const Confirmed = ({ navigation }) => {
+const Confirmed = () => {
+    const navigation = useNavigation();
+
   return (
     <View style={styles.Container}>
         <View style={styles.BoxModelConfirmed}>

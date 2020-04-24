@@ -1,12 +1,15 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, ImageBackground} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 import styles from './styles';
 import fundo from '../../assets/images/fundoMap.jpg';
 import profile from '../../assets/images/profile.jpg'
 
 
-const Map = ({ navigation }) => {
+const Map = () => {
+    const navigation = useNavigation();
+    
   return (
     <View style={styles.Container}>
         <ImageBackground source={fundo} style={styles.image}>
