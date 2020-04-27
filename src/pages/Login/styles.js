@@ -36,8 +36,11 @@ export default StyleSheet.create({
         padding: 15,
         backgroundColor: colors.secondary,
         borderRadius: 6,
-        marginBottom: 20,
         color: colors.purpleLight
+    },
+    ErrorText: {
+        marginBottom: 20,
+        color: '#851010',
     },
 
     boxModelBtn: {

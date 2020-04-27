@@ -7,13 +7,11 @@ export default StyleSheet.create({
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: colors.primary
+        backgroundColor: colors.primary,
     },
     BoxModelChamado: {
         width: '100%',
         height: '60%',
-        alignItems: 'center',
-        justifyContent: 'center',
         lineHeight: 32,
     },
     Textchamado: {
@@ -29,6 +27,7 @@ export default StyleSheet.create({
         marginBottom: 20,
         alignItems: 'center',
         justifyContent: 'center',
+        marginBottom: 50,
     },
     TextInput: {
         height: 50,
@@ -43,7 +42,7 @@ export default StyleSheet.create({
     boxModelBtn: {
         width: '100%',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     ModelBtn:{
         width: '100%',
@@ -61,5 +60,9 @@ export default StyleSheet.create({
         fontSize: 22,
         color: colors.primary,
         textAlign: 'center'
+    },
+    CardList: {
+        height: '25%',
+        width: '80%',
     }
 })
