@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import {useNavigation} from '@react-navigation/native'
+import {useNavigation, useRoute} from '@react-navigation/native'
 
 import styles from './styles';
 
@@ -10,6 +10,15 @@ import styles from './styles';
 
 const Confirmed = () => {
     const navigation = useNavigation();
+    const route = useRoute();
+    const {geolocation: location} = route.params;
+
+    const navigateToMap = () => {
+        console.log(location);
+        navigation.navigate('Mapa', {
+            geolocation: location
+        })
+    }
 
   return (
     <View style={styles.Container}>
@@ -35,7 +44,7 @@ const Confirmed = () => {
              */}
             <View style={styles.boxModelBtn}>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('Mapa')}
+                    onPress={navigateToMap}
                 >
                     <View style={styles.InputBtn}>
                         <Text style={styles.TextBtn}>Voltar</Text>

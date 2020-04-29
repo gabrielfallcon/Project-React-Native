@@ -6,22 +6,25 @@ import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 import FileCard from '../../components/FileCard';
+import * as Location from 'expo-location';
 
 
 import colors from '../../assets/var/colors'
-
 import styles from './styles';
 
 const NewTicket = () => {
-    const navigation = useNavigation('Confirmacao Chamado');
+    const navigation = useNavigation();
 
     const navigateToConfirmed = () => {
-        navigation.navigate('Confirmacao Chamado')
+        navigation.navigate('Confirmacao Chamado', {
+            geolocation: location,
+        })
     }
 
-    const [address, setAddress] = useState({endereco: 'geolocalização',});
+    const [address, setAddress] = useState({endereco: 'select',});
     const [files, setFiles] = useState([]);
     const [cont, setCont] = useState(0);
+    const [location, setLocation] = useState(null)
 
     const getPermissionAsync = async () => {
         if (Constants.platform.ios) {
@@ -32,9 +35,27 @@ const NewTicket = () => {
         }
     }
 
+    const getGeolocationAsync = async () => {
+        if(address.endereco === 'geolocalizacao'){
+            let { status } = await Location.requestPermissionsAsync();
+            if(status !== 'granted') {
+                alert('Desculpe mas é necesseario que você permita o acesso a localização');
+            }
+    
+            let location = await Location.getCurrentPositionAsync({});
+            // console.log(location);
+            setLocation(location);
+        }
+    }
+
     useEffect(() => {
         getPermissionAsync();
     }, [])
+
+    
+    useEffect(() => {
+        getGeolocationAsync();
+    }, [address]);
 
     const getPhoto = async () => {
         try {
@@ -108,10 +129,8 @@ const NewTicket = () => {
                         setAddress({endereco: itemValue})}
                     prompt={'Selecione um Endereço'}
                     mode={'dropdown'}
-                    
-        
                 >
-                    <Picker.Item label="Selecione um Endereço" value="" color="grey"/>
+                    <Picker.Item label="Selecione um Endereço" value="select" color="grey"/>
                     <Picker.Item label="Geolocalização" value="geolocalizacao" />
                     <Picker.Item label="Endereço 1" value="endereco1" />
                     <Picker.Item label="Endereço 2" value="endereco2" />

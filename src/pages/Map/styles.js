@@ -69,5 +69,13 @@ export default StyleSheet.create({
         fontSize: 22,
         color: colors.purpleLight,
         textAlign: 'center'
+    },
+    mapView: {
+        width: '100%',
+        height: '100%',
+    },
+    btnMaps: {
+        width: 240,
+        marginTop: 10
     }
 })

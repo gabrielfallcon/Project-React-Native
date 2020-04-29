@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, ImageBackground} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import { Linking } from 'expo';
 
 import styles from './styles';
 import fundo from '../../assets/images/fundoMap.jpg';
@@ -27,6 +28,11 @@ const Map = () => {
                         previsão de chegada: 12:50
                     </Text>
                 </View>
+                <TouchableOpacity>
+                    <View style={styles.btnMaps}>
+                        <Text style={styles.TextBtn}>Abrir no waze</Text>
+                    </View>
+                </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => navigation.navigate('Login')}
                 >
