@@ -1,0 +1,76 @@
+import { StyleSheet } from 'react-native' 
+import colors from '../../assets/var/colors'
+
+export default StyleSheet.create({
+    Container: {
+        height: '100%',
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: colors.primary
+    },
+    image: {
+        flex: 1,
+        resizeMode: "cover",
+        justifyContent: "center",
+        width: '100%',
+        height: '100%'
+    },
+    BoxModelPercusion: {
+        width: '100%',
+        height: '55%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        lineHeight: 32,
+        backgroundColor: colors.purpleLight,
+        borderTopRightRadius: 50,
+        borderTopLeftRadius: 50,
+        position: 'absolute',
+        bottom: 0
+    },
+    profile:{
+        flex: 1,
+        resizeMode: 'contain',
+        justifyContent: "center",
+        width: 120,
+        height: 120,
+        position: 'absolute',
+        top: '-27%',
+        borderRadius: 50
+    },
+    TextTitle: {
+        fontFamily: 'Roboto',
+        fontStyle: 'normal',
+        fontWeight: '300',
+        fontSize: 24,
+        color: colors.purpleLight,
+        marginBottom: 30,
+        color: "#FFF",
+        textAlign: 'center',
+        marginTop: 30
+    },
+    TextDetail:{
+        fontFamily: 'Roboto',
+        fontStyle: 'normal',
+        fontWeight: '400',
+        fontSize: 16,
+        color: "#FFF",
+        textAlign: 'center',
+        marginBottom: 30,
+        paddingHorizontal: 20
+    },
+    InputBtn: {
+        width: 150,
+        padding: 10,
+        height: 50,
+        borderRadius: 10,
+        backgroundColor: colors.secondary,
+        marginTop: 10
+    },
+    TextBtn: {
+        fontSize: 18,
+        color: '#FFF',
+        textAlign: 'center'
+    },
+
+})

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert, StatusBar } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import colors from '../../assets/var/colors'
@@ -32,6 +32,7 @@ const Login = () => {
 
   return (
     <View style={styles.Container}>
+        <StatusBar barStyle='dark-content' backgroundColor="#BB86FC" />
         <View style={styles.BoxModelLogin}>
             <View >
                 <Text style={styles.TextLogin}>Login</Text>
