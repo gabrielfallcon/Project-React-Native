@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, ImageBackground} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import { Linking } from 'expo';
 
 import styles from './styles';
@@ -10,6 +10,20 @@ import profile from '../../assets/images/profile.jpg'
 
 const Map = () => {
     const navigation = useNavigation();
+    const route = useRoute();
+    const {geolocation: location} = route.params;
+
+    const openWaze = () => {
+        let zoom = '6';
+        let navigate = 'yes';
+        const latitude = location.coords.latitude;
+        const longitude = location.coords.longitude;
+
+        let url = 'waze://?ll=' + latitude + ',' + longitude +
+        '&navigate=' + navigate + '&z=' + zoom
+
+        Linking.openURL(url);
+    }
     
   return (
     <View style={styles.Container}>
@@ -28,7 +42,9 @@ const Map = () => {
                         previsão de chegada: 12:50
                     </Text>
                 </View>
-                <TouchableOpacity>
+                <TouchableOpacity
+                    onPress={openWaze}
+                >
                     <View style={styles.btnMaps}>
                         <Text style={styles.TextBtn}>Abrir no waze</Text>
                     </View>
