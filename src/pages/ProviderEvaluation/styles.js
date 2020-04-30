@@ -10,6 +10,7 @@ export default StyleSheet.create({
         backgroundColor: colors.primary
     },
     BoxModelLogin: {
+        zIndex: 1,
         width: '100%',
         height: '60%',
         alignItems: 'center',
@@ -24,7 +25,7 @@ export default StyleSheet.create({
         height: 140,
         position: 'absolute',
         top: '-15%',
-        borderRadius: 50
+        borderRadius: 50,
     },
     TextProvider: {
         fontFamily: 'Roboto',
@@ -57,12 +58,13 @@ export default StyleSheet.create({
         
     },
     BoxModelInput: {
+        zIndex: 1,
         width: '100%',
         marginBottom: 20,
         alignItems: 'center',
         justifyContent: 'center',
         position: 'absolute',
-        bottom: '-25%'
+        bottom: '-5%',
     },
     TextInput: {
         height: 60,
@@ -98,5 +100,12 @@ export default StyleSheet.create({
         fontSize: 22,
         color: colors.primary,
         textAlign: 'center'
-    }
+    },
+    containerRating: {
+        width: '100%',
+        height: '20%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
 })

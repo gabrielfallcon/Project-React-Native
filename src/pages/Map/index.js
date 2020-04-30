@@ -50,7 +50,7 @@ const Map = () => {
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('Login')}
+                    onPress={() => navigation.navigate('Avaliacao')}
                 >
                     <View style={styles.InputBtn}>
                         <Text style={styles.TextBtn}>Finalizar</Text>
