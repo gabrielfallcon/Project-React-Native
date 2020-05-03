@@ -6,12 +6,25 @@ export default StyleSheet.create({
         backgroundColor: colors.primary,
         height: '100%'
     },
+    boxLogo: {
+        height: 80
+    },
+    logo: {
+        flex: 1,
+        resizeMode: "cover",
+        justifyContent: "center",
+        width: 80,
+        height: 80,
+        marginHorizontal: 10,
+        marginTop: 10
+    },
     TitleServices:{
         fontSize: 30,
         marginBottom: 30,
-        marginTop: 30,
+        marginTop: 40,
         color: colors.purpleLight,
-        fontWeight: '300'
+        fontWeight: '300',
+        marginLeft: 20
     },
     box: {
         height: 500,
@@ -33,7 +46,7 @@ export default StyleSheet.create({
         fontSize: 20,
         fontWeight: '200',
         marginTop: 20,
-        marginBottom: 10
+        marginBottom: 10,
     },
     TextDesc: {
         fontSize: 16,
@@ -42,7 +55,8 @@ export default StyleSheet.create({
     ServicesContainer: {
         height: 550, 
         width: '100%', 
-        justifyContent: 'center'
+        justifyContent: 'center',
+        backgroundColor: colors.secondary
     },
     HistoryContainer: {
         width: '100%', 

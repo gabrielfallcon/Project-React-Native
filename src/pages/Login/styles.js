@@ -11,10 +11,18 @@ export default StyleSheet.create({
     },
     BoxModelLogin: {
         width: '100%',
-        height: '60%',
+        height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
         lineHeight: 32,
+    },
+    logo: {
+        flex: 1,
+        resizeMode: "cover",
+        justifyContent: "center",
+        width: '100%',
+        height: '100%',
+      
     },
     TextLogin: {
         fontFamily: 'Roboto',
@@ -22,7 +30,8 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 48,
         color: colors.purpleLight,
-        marginBottom: 40
+        marginBottom: 20,
+        textAlign: 'center'
     },
     BoxModelInput: {
         width: '100%',

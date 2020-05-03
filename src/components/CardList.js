@@ -38,7 +38,7 @@ const CardList = ({ service }) => {
 const styles = StyleSheet.create({
     Container: {
         maxHeight: 350,
-        backgroundColor: '#121212'
+        backgroundColor: '#121212',
     },
     list: {
 
