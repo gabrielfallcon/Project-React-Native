@@ -8,7 +8,7 @@ export default StyleSheet.create({
     },
     TitleServices:{
         fontSize: 30,
-        marginBottom: 100,
+        marginBottom: 30,
         marginTop: 30,
         color: colors.purpleLight,
         fontWeight: '300'
@@ -38,5 +38,15 @@ export default StyleSheet.create({
     TextDesc: {
         fontSize: 16,
         color: colors.purpleDark
+    },
+    ServicesContainer: {
+        height: 550, 
+        width: '100%', 
+        justifyContent: 'center'
+    },
+    HistoryContainer: {
+        width: '100%', 
+        height: 200, 
+        justifyContent: 'center'
     }
 })

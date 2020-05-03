@@ -9,7 +9,8 @@ import NewTicket from '../src/pages/NewTicket';
 import Confirmed from '../src/pages/Confirmed';
 import Mapa from '../src/pages/Map';
 import ProviderEvaluation from '../src/pages/ProviderEvaluation';
-import Product from '../src/pages/Product'
+import Product from '../src/pages/Product';
+import ListServices from '../src/pages/ListServices';
 
 const Routes = () => {
   return (
@@ -21,6 +22,7 @@ const Routes = () => {
         <AppStack.Screen name="Mapa" component={Mapa} />
         <AppStack.Screen name="Avaliacao" component={ProviderEvaluation} />
         <AppStack.Screen name="Produto" component={Product} />
+        <AppStack.Screen name="Lista de Servicos" component={ListServices} />
       </AppStack.Navigator>
     </NavigationContainer>
   );

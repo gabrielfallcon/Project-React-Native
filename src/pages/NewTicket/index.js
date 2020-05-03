@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { View, Text, TextInput, TouchableOpacity, FlatList, ScrollView } from 'react-native';
-import {useNavigation} from '@react-navigation/native'
+import {useNavigation, useRoute} from '@react-navigation/native'
 import {Picker} from '@react-native-community/picker';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
@@ -14,6 +14,9 @@ import styles from './styles';
 
 const NewTicket = () => {
     const navigation = useNavigation();
+    const route = useRoute();
+
+    const {tipo} = route.params;
 
     const navigateToConfirmed = () => {
         navigation.navigate('Confirmacao Chamado', {
@@ -99,17 +102,19 @@ const NewTicket = () => {
             }
         >
             <View >
-                <Text style={styles.Textchamado}>Novo Chamado</Text>
+                <Text style={styles.Textchamado}>{'Novo Chamado'}</Text>
             </View>
             <View style={styles.BoxModelInput}>
                 <TextInput 
                     style={styles.TextInput}
-                    placeholder="Titulo"
+                    placeholder="Tipo de serviço"
                     placeholderTextColor={colors.purpleLight}
+                    editable={false}
+                    value={tipo}    
                 />
                 <TextInput 
                     style={styles.TextInput}
-                    placeholder="Tipo de serviço"
+                    placeholder="Titulo"
                     placeholderTextColor={colors.purpleLight}
                 />
                 <TextInput 

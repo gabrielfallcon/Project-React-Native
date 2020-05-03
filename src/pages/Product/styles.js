@@ -6,15 +6,18 @@ export default StyleSheet.create({
         height: '100%',
         width: '100%',
         alignItems: 'center',
-        justifyContent: 'center',
         backgroundColor: colors.primary
     },
     image: {
-        flex: 1,
         resizeMode: "cover",
         justifyContent: "center",
         width: '100%',
         height: '100%'
+    },
+    imageContainer: {
+        width: '100%',
+        height: 400,
+        alignItems: 'center',
     },
     BoxModelPercusion: {
         width: '100%',
@@ -72,5 +75,6 @@ export default StyleSheet.create({
         color: '#FFF',
         textAlign: 'center'
     },
+    
 
 })

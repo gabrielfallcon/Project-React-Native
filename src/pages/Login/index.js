@@ -71,7 +71,7 @@ const Login = () => {
             <View style={styles.boxModelBtn}>
                 <TouchableOpacity
                     onPress={() => {
-                        if(hideCpf && hideSenha && cpf != '' && senha != '') navigation.navigate('Novo Chamado');
+                        if(hideCpf && hideSenha && cpf != '' && senha != '') navigation.navigate('Lista de Servicos');
                         else Alert.alert(
                             'Erro ao Entrar',
                             'Os campos digitados são invalidos, tente novamente.',

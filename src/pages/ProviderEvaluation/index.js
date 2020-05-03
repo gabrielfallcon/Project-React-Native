@@ -39,7 +39,7 @@ const ProviderEvaluation = () => {
                 <View style={styles.BoxModelInput}>
                     <Text style={styles.TextEvaluation}>Avalie o Serviço</Text>
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('Produto')}
+                        onPress={() => navigation.navigate('Lista de Servicos')}
                     >
                         <View style={styles.InputBtn}>
                             <Text style={styles.TextBtn}>Finalizar</Text>

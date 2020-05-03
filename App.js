@@ -10,15 +10,15 @@ import { StyleSheet, Text, View, CheckBox } from 'react-native';
 // import Map from './src/pages/Map'
 // import ProviderEvaluation from './src/pages/ProviderEvaluation'
 // import Product from './src/pages/Product'
-import ListServices from './src/pages/ListServices'
+// import ListServices from './src/pages/ListServices'
 
-// import Routes from './src/routes';
+import Routes from './src/routes';
 
 export default function App() {
   return (
-    // <Routes />
+    <Routes />
     // <ProviderEvaluation/>
-    <ListServices />
+    // <ListServices />
   );
 }
 
