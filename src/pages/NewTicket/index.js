@@ -24,10 +24,17 @@ const NewTicket = () => {
         })
     }
 
+    const patterWithOutEspecialCaracter = /[^ \nA-Za-z0-9À-ÖØ-öø-ÿ/]/g
+
+    const [titulo, setTitulo] = useState(null);
+    const [desc, setDesc] = useState(null)
     const [address, setAddress] = useState({endereco: 'select',});
     const [files, setFiles] = useState([]);
     const [cont, setCont] = useState(0);
     const [location, setLocation] = useState(null)
+    const [hideTitulo, setHideTitulo] = useState(true);
+    const [hideDesc, setHideDesc] = useState(true);
+    const [overlayGeolocalization, setOverlayGeolocalization] = useState(false);
 
     const getPermissionAsync = async () => {
         if (Constants.platform.ios) {
@@ -44,16 +51,14 @@ const NewTicket = () => {
             if(status !== 'granted') {
                 alert('Desculpe mas é necesseario que você permita o acesso a localização');
             }
-    
+            setOverlayGeolocalization(true);
             let location = await Location.getCurrentPositionAsync({});
-            // console.log(location);
+            setOverlayGeolocalization(false);
+            console.log(location);
             setLocation(location);
         }
     }
 
-    useEffect(() => {
-        getPermissionAsync();
-    }, [])
 
     
     useEffect(() => {
@@ -61,6 +66,7 @@ const NewTicket = () => {
     }, [address]);
 
     const getPhoto = async () => {
+        await getPermissionAsync();
         try {
             let photo = await ImagePicker.launchImageLibraryAsync(
                     {
@@ -87,9 +93,33 @@ const NewTicket = () => {
         });
     }
 
+    const getTitulo = (textoDigitado) => {
+        if(!patterWithOutEspecialCaracter.test(textoDigitado) 
+        && textoDigitado !== '') setHideTitulo(true);
+        else setHideTitulo(false);
+
+        setTitulo(textoDigitado);
+    }
+    const getDesc = (textoDigitado) => {
+        if(!patterWithOutEspecialCaracter.test(textoDigitado) && 
+        textoDigitado !== '') setHideDesc(true);
+        else setHideDesc(false);
+
+        setDesc(textoDigitado);
+    }
+
 
   return (
     <View style={styles.Container}>
+        {
+            overlayGeolocalization ? 
+            <View style={styles.OverlayBackground}>
+                <View style={styles.OverlayContainer}>
+                    <Text style={styles.OverlayText}>Obtendo sua localização</Text>
+                </View>
+            </View> 
+            : null
+        }
         <ScrollView 
             style={styles.BoxModelChamado} 
             contentContainerStyle={
@@ -98,44 +128,64 @@ const NewTicket = () => {
                     paddingTop: '20%',
                     alignItems: 'center',
                     alignContent: 'center',
+                    height: 850,
                 }
             }
         >
-            <View >
-                <Text style={styles.Textchamado}>{'Novo Chamado'}</Text>
+            
+            <View style={styles.TituloContainer}>
+                <Text style={styles.Textchamado}>Novo Chamado</Text>
             </View>
             <View style={styles.BoxModelInput}>
-                <TextInput 
+                {/* <TextInput 
                     style={styles.TextInput}
                     placeholder="Tipo de serviço"
                     placeholderTextColor={colors.purpleLight}
                     editable={false}
                     value={tipo}    
-                />
+                /> */}
                 <TextInput 
                     style={styles.TextInput}
                     placeholder="Titulo"
                     placeholderTextColor={colors.purpleLight}
+                    value={titulo}
+                    onChangeText={getTitulo}
                 />
+              
+                {
+                    hideTitulo ? console.log('sem view') : 
+                    <View>
+                        <Text style={styles.ErrorText}>
+                            O titulo não pode ser vazio ou ter caracteres especiais
+                        </Text>
+                    </View>
+                }
+            
                 <TextInput 
                     style={styles.TextInput}
                     placeholder="Descrição"
                     placeholderTextColor={colors.purpleLight}
+                    value={desc}
+                    onChangeText={getDesc}
                 />
-                {/* <TextInput 
-                    style={styles.TextInput}
-                    placeholder="Selecione o Endereço"
-                    placeholderTextColor={colors.purpleLight}
-                /> */}
+                {
+                    hideDesc ? null : 
+                    <View>
+                        <Text style={styles.ErrorText}>
+                            A descrição não pode ser vazia ou ter caracteres especiais
+                        </Text>
+                    </View>
+                }
+        
                 <Picker
                     selectedValue={address.endereco}
                     style={styles.TextInput}
                     onValueChange={(itemValue, itemIndex) => 
                         setAddress({endereco: itemValue})}
                     prompt={'Selecione um Endereço'}
-                    mode={'dropdown'}
+                    mode={'dialog'}
                 >
-                    <Picker.Item label="Selecione um Endereço" value="select" color="grey"/>
+                    {/* <Picker.Item label="Selecione um Endereço" value="select" color="grey"/> */}
                     <Picker.Item label="Geolocalização" value="geolocalizacao" />
                     <Picker.Item label="Endereço 1" value="endereco1" />
                     <Picker.Item label="Endereço 2" value="endereco2" />
@@ -151,11 +201,6 @@ const NewTicket = () => {
                     <Text style={{color: colors.purpleLight}}>Anexar arquivo</Text>
                 
                 </TouchableOpacity>
-                {/* <TextInput 
-                    style={styles.TextInput}
-                    placeholder="Anexar Arquivo"
-                    placeholderTextColor={colors.purpleLight}
-                />       */}
 
                 <View style={styles.CardList}>
                     <FlatList

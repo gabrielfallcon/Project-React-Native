@@ -1,12 +1,31 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native'
 
 import colors from '../assets/var/colors'
 
 const CardHistoryService = (props) => {
+    const deleteAlert = () => Alert.alert(
+        'Excluir historico',
+        'Você realmente deseja excluir este historico?',
+        [
+            {
+                text: 'Não',
+                style: 'cancel'
+            },
+            {
+                text: 'Sim',
+                onPress: props.onDelete.bind(this, props.chave),
+            }
+        ],
+        {cancelable: false}
+    );
+
     return(
         <View style={styles.BoxHistory}>
-            <TouchableOpacity style={styles.Close}>
+            <TouchableOpacity 
+                style={styles.Close}
+                onPress={deleteAlert}
+            >
                 <Text style={styles.CloseText}>X</Text>
             </TouchableOpacity>
             <View style={styles.Types}>

@@ -48,14 +48,56 @@ const ListServices = () => {
             tempo: time,
         })
     }
+    const initialState = [{ key: '1', type: 'Pisos danificados', titulo: 'Preciso que troquem o meu piso', status: 'Em andamento' },
+    { key: '2', type: 'Pisos danificados', titulo: 'Preciso que troquem o meu piso', status: 'Em andamento' },
+    { key: '3', type: 'Pisos danificados', titulo: 'Preciso que troquem o meu piso', status: 'Em andamento' },
+    { key: '4', type: 'Pisos danificados', titulo: 'Preciso que troquem o meu piso', status: 'Em andamento' },]
 
-    const [history, setHistory] = useState([
-        { key: '1', type: 'Pisos danificados', titulo: 'Preciso que troquem o meu piso', status: 'Em andamento' },
-        { key: '2', type: 'Pisos danificados', titulo: 'Preciso que troquem o meu piso', status: 'Em andamento' },
-        { key: '3', type: 'Pisos danificados', titulo: 'Preciso que troquem o meu piso', status: 'Em andamento' },
-        { key: '4', type: 'Pisos danificados', titulo: 'Preciso que troquem o meu piso', status: 'Em andamento' },
-    ]);
+    const [history, setHistory] = useState(initialState);
 
+    const removeHistory = (keyToRemove) => {
+        setHistory(historicos => {
+            return historicos.filter(historico => historico.key !== keyToRemove);
+        });
+    }
+    const reloadHistory = () => {
+        setHistory(initialState);
+    }
+
+    let viewEmptyHistory
+    if (history.length === 0) {
+        viewEmptyHistory =
+            <View style={styles.emptyHistoryContainer}>
+                <Text style={styles.emptyHistoryTextDesc}>
+                    A lista de historico está vazia, 
+                </Text>
+                <Text style={styles.emptyHistoryTextDesc}>
+                    clique em recarregar para carregar a lista novamente!
+                </Text>
+                <TouchableOpacity 
+                    style={styles.ReloadBtn}
+                    onPress={reloadHistory}
+                >
+                    <Text style={styles.ReloadTextBtn}>Recarregar</Text>
+                </TouchableOpacity>
+            </View>
+    }
+    if (history.length > 0) {
+        viewEmptyHistory =
+            <FlatList
+                data={history}
+                horizontal
+                renderItem={historico => (
+                    <CardHistoryService
+                        onDelete={removeHistory}
+                        chave={historico.item.key}
+                        type={historico.item.type}
+                        titulo={historico.item.titulo}
+                        status={historico.item.status}
+                    />
+                )}
+            />
+    }
 
     return (
         <SafeAreaView style={styles.Container}>
@@ -65,19 +107,22 @@ const ListServices = () => {
             <ScrollView>
                 <Text style={styles.TitleServices}>Historico de serviços</Text>
                 <View style={styles.HistoryContainer}>
-
-                    <FlatList
+                    {/* <FlatList
                         data={history}
                         horizontal
                         renderItem={historico => (
                             <CardHistoryService
+                                onDelete={removeHistory}
+                                chave={historico.item.key}
                                 type={historico.item.type}
                                 titulo={historico.item.titulo}
                                 status={historico.item.status}
                             />
                         )}
-                    />
+                    /> */}
+                    {viewEmptyHistory}
                 </View>
+                    
                 <Text style={styles.TitleServices}>Serviços de Manutenção</Text>
                 <View style={styles.ServicesContainer}>
                     <FlatList

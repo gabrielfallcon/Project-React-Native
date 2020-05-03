@@ -61,6 +61,29 @@ export default StyleSheet.create({
     HistoryContainer: {
         width: '100%', 
         height: 200, 
-        justifyContent: 'center'
-    }
+        justifyContent: 'center',
+    },
+    emptyHistoryContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    emptyHistoryTextDesc: {
+        fontSize: 16,
+        color: colors.purpleDark,
+        textAlign: 'center',
+        marginBottom: 10
+    },
+    ReloadBtn: {
+        marginTop: 10,
+        width: 120,
+        padding: 10,
+        borderRadius: 10,
+        backgroundColor: colors.purpleLight,
+        color: colors.primary
+    },
+    ReloadTextBtn: {
+        fontSize: 16,
+        color: colors.primary,
+        textAlign: 'center'
+    },
 })

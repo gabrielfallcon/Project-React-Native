@@ -14,20 +14,30 @@ export default StyleSheet.create({
         height: '60%',
         lineHeight: 32,
     },
+    TituloContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     Textchamado: {
         fontFamily: 'Roboto',
         fontStyle: 'normal',
         fontWeight: 'bold',
         fontSize: 40,
         color: colors.purpleLight,
-        marginBottom: 40
+    },
+    TextTipoChamado: {
+        fontFamily: 'Roboto',
+        fontStyle: 'normal',
+        fontWeight: 'bold',
+        fontSize: 32,
+        color: colors.purpleLight,
     },
     BoxModelInput: {
         width: '100%',
         marginBottom: 20,
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom: 50,
+        marginBottom: 10,
     },
     TextInput: {
         height: 50,
@@ -64,5 +74,31 @@ export default StyleSheet.create({
     CardList: {
         height: '25%',
         width: '80%',
+    },
+    ErrorText: {
+        marginBottom: 20,
+        color: '#851010',
+
+    },
+    OverlayBackground: {
+        zIndex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+        position: 'absolute',
+        height: '100%',
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+
+    },
+    OverlayContainer: {
+        backgroundColor: '#FFF',
+        height: '15%',
+        width: '50%',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    OverlayText: {
+        color: colors.primary,
+        fontFamily: 'Roboto'
     }
 })
