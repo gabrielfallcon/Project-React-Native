@@ -25,7 +25,7 @@ export default StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         lineHeight: 32,
-        backgroundColor: colors.purpleLight,
+        backgroundColor: colors.secondary,
         borderTopRightRadius: 50,
         borderTopLeftRadius: 50,
         position: 'absolute',
@@ -67,7 +67,7 @@ export default StyleSheet.create({
         padding: 10,
         height: 50,
         borderRadius: 10,
-        backgroundColor: colors.secondary,
+        backgroundColor: colors.purpleLight,
         marginTop: 10
     },
     TextBtn: {
