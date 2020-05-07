@@ -8,16 +8,11 @@ import styles from './styles';
 
 // import success from '../../assets/animations/sucess.json'
 
-const Confirmed = () => {
+const Finished = () => {
     const navigation = useNavigation();
-    const route = useRoute();
-    const {geolocation: location} = route.params;
 
-    const navigateToMap = () => {
-        console.log(location);
-        navigation.navigate('Avaliacao', {
-            geolocation: location
-        })
+    const navigateToListTicket = () => {
+        navigation.navigate('Lista Chamado');
     }
 
   return (
@@ -25,26 +20,17 @@ const Confirmed = () => {
         <View style={styles.BoxModelConfirmed}>
             <View >
                 <Text style={styles.TextConfirmed}>
-                    Serviço
-                    Contratado!
+                    Chamado
+                    Finalizado!
                 </Text>
                 <Text style={styles.TextInformation}>
-                    Aguarde até o prestador do 
-                    serviço chegar na sua residência.
+                    Este chamado foi
+                    encerrado com sucesso!
                 </Text>
             </View>
-
-            {/* <View style={styles.animation}>
-                <LottieView 
-                    source={success} 
-                    autoPlay 
-                    resizeMode="contain"
-                    loop/>
-            </View>
-             */}
             <View style={styles.boxModelBtn}>
                 <TouchableOpacity
-                    onPress={navigateToMap}
+                    onPress={navigateToListTicket}
                 >
                     <View style={styles.InputBtn}>
                         <Text style={styles.TextBtn}>Voltar</Text>
@@ -55,4 +41,4 @@ const Confirmed = () => {
     </View>
   );
 }
-export default Confirmed
+export default Finished

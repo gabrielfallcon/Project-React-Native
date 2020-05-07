@@ -11,6 +11,9 @@ import Mapa from '../src/pages/Map';
 import ProviderEvaluation from '../src/pages/ProviderEvaluation';
 import Product from '../src/pages/Product';
 import ListServices from '../src/pages/ListServices';
+import Finished from '../src/pages/Finished'
+import TicketDetail from '../src/pages/TicketDetail'
+import ListTicket from '../src/pages/ListTicket'
 
 const Routes = () => {
   return (
@@ -23,6 +26,9 @@ const Routes = () => {
         <AppStack.Screen name="Avaliacao" component={ProviderEvaluation} />
         <AppStack.Screen name="Produto" component={Product} />
         <AppStack.Screen name="Lista de Servicos" component={ListServices} />
+        <AppStack.Screen name="Chamado Finalizado" component={Finished} />
+        <AppStack.Screen name="DetalhesChamado" component={TicketDetail} />
+        <AppStack.Screen name="Lista Chamado" component={ListTicket} />
       </AppStack.Navigator>
     </NavigationContainer>
   );

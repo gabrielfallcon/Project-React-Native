@@ -11,18 +11,22 @@ import profile from '../../assets/images/profile.jpg'
 const Map = () => {
     const navigation = useNavigation();
     const route = useRoute();
-    const {geolocation: location} = route.params;
+    const {lat, lon} = route.params;
 
     const openWaze = () => {
         let zoom = '6';
         let navigate = 'yes';
-        const latitude = location.coords.latitude;
-        const longitude = location.coords.longitude;
+        const latitude = lat;
+        const longitude = lon;
 
         let url = 'waze://?ll=' + latitude + ',' + longitude +
         '&navigate=' + navigate + '&z=' + zoom
 
         Linking.openURL(url);
+    }
+
+    const navigateToFinished = () => {
+        navigation.navigate('Chamado Finalizado')
     }
     
   return (
@@ -50,14 +54,14 @@ const Map = () => {
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('Avaliacao')}
+                    onPress={navigateToFinished}
                 >
                     <View style={styles.InputBtn}>
                         <Text style={styles.TextBtn}>Finalizar</Text>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('Login')}
+                    onPress={() => navigation.goBack()}
                 >
                     <View style={styles.InputBtn}>
                         <Text style={styles.TextBtn}>Voltar</Text>

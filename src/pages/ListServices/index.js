@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, ImageBackground, TouchableOpacity, SafeAreaView, FlatList, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, ImageBackground, TouchableOpacity, 
+    SafeAreaView, FlatList, ScrollView, StyleSheet, Alert } from 'react-native';
 
 import CardList from '../../components/CardList';
 import CardService from '../../components/CardService';
@@ -90,14 +91,42 @@ const ListServices = () => {
                 renderItem={historico => (
                     <CardHistoryService
                         onDelete={removeHistory}
-                        chave={historico.item.key}
-                        type={historico.item.type}
-                        titulo={historico.item.titulo}
-                        status={historico.item.status}
-                    />
+                    > 
+                        <TouchableOpacity 
+                            style={styles.Close}
+                            onPress={() => deleteAlert(historico.item.key)}
+                        >
+                            <Text style={styles.CloseText}>X</Text>
+                        </TouchableOpacity>
+                        <View style={styles.Types}>
+                            <Text style={styles.TypesText}>Tipos:</Text>
+                            <Text style={styles.TypesDesc}>{historico.item.type}</Text>
+                        </View>
+                        <View style={styles.Types}>
+                            <Text style={styles.TypesText}>Titulo:</Text>
+                            <Text style={styles.TypesDesc}>{historico.item.titulo}</Text>
+                        </View>
+                        <Text style={styles.Status}>{historico.item.status}</Text>
+                    </CardHistoryService>
                 )}
             />
     }
+
+    const deleteAlert = (keyToRemove) => Alert.alert(
+        'Excluir historico',
+        'Você realmente deseja excluir este historico?',
+        [
+            {
+                text: 'Não',
+                style: 'cancel'
+            },
+            {
+                text: 'Sim',
+                onPress: removeHistory.bind(this, keyToRemove)
+            }
+        ],
+        {cancelable: false}
+    );
 
     return (
         <SafeAreaView style={styles.Container}>

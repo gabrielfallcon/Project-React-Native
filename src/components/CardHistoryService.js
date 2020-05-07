@@ -1,44 +1,13 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native'
+import { View, Text, StyleSheet,  } from 'react-native'
 
 import colors from '../assets/var/colors'
 
 const CardHistoryService = (props) => {
-    const deleteAlert = () => Alert.alert(
-        'Excluir historico',
-        'Você realmente deseja excluir este historico?',
-        [
-            {
-                text: 'Não',
-                style: 'cancel'
-            },
-            {
-                text: 'Sim',
-                onPress: props.onDelete.bind(this, props.chave),
-            }
-        ],
-        {cancelable: false}
-    );
 
     return(
-        <View style={styles.BoxHistory}>
-            <TouchableOpacity 
-                style={styles.Close}
-                onPress={deleteAlert}
-            >
-                <Text style={styles.CloseText}>X</Text>
-            </TouchableOpacity>
-            <View style={styles.Types}>
-                <Text style={styles.TypesText}>Tipos:</Text>
-                <Text style={styles.TypesDesc}>{props.type}</Text>
-            </View>
-
-            <View style={styles.Types}>
-                <Text style={styles.TypesText}>Titulo:</Text>
-                <Text style={styles.TypesDesc}>{props.titulo}</Text>
-            </View>
-            
-            <Text style={styles.Status}>{props.status}</Text>
+        <View style={{...styles.BoxHistory, ...props.styles}}>
+            {props.children}
         </View>
     )
 }
@@ -53,41 +22,6 @@ const styles = StyleSheet.create({
         position: 'relative',
         marginLeft: 10
     },
-    Close: {
-        width: 30,
-        height: 30,
-        backgroundColor: '#c53030',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 50,
-        position: 'absolute',
-        right: 0,
-        top: 0
-    },
-    CloseText:{
-        color: colors.primary
-    },
-    Types: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: 20,
-    },
-    TypesText: {
-        width: '50%',
-        fontSize: 20,
-        color: colors.purpleDark
-    },
-    TypesDesc: {
-        width: '50%',
-        fontSize: 14,
-        color: colors.purpleLight
-    },
-    Status: {
-        textAlign: 'center',
-        fontSize: 22,
-        color: colors.purpleDark,
-    }
 
 })
 

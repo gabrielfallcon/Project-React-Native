@@ -86,20 +86,7 @@ export default StyleSheet.create({
         color: colors.primary,
         textAlign: 'center'
     },
-    Close: {
-        width: 30,
-        height: 30,
-        backgroundColor: '#c53030',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 50,
-        position: 'absolute',
-        right: 0,
-        top: 0
-    },
-    CloseText:{
-        color: colors.primary
-    },
+
     Types: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -115,10 +102,5 @@ export default StyleSheet.create({
         width: '50%',
         fontSize: 14,
         color: colors.purpleLight
-    },
-    Status: {
-        textAlign: 'center',
-        fontSize: 22,
-        color: colors.purpleDark,
     },
 })
