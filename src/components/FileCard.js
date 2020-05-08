@@ -4,21 +4,8 @@ import Colors from '../assets/var/colors';
 
 const FileCard = (props) => {
   return (
-    <View style={styles.card}>
-      <Image 
-        source={{uri: props.photo.photoUri}}
-        style={styles.pic}
-      />
-      <TouchableOpacity
-        style={styles.button}
-        onPress={props.onDelete.bind(this, props.chave)}
-      >
-        <Text
-          style={styles.text}
-        >
-          Remover
-        </Text>
-      </TouchableOpacity>
+    <View style={{...styles.card, ...props.styles}}>
+        {props.children}
     </View>
   );
 }
@@ -27,25 +14,27 @@ const styles = StyleSheet.create(
   {
     card: {
       flex: 1,
-      padding: '10%',
+      // padding: '10%',
       borderRadius: 5,
       backgroundColor: Colors.secondary,
       width: 80,
       height: 105,
+      maxHeight:105,
       marginRight: 15,
       alignItems: 'center',
       alignContent: 'center',
     },
-    pic: {
-      width: 65,
-      height: 65,
-    },
-    button: {
-      color: Colors.purpleLight,
-    },
-    text: {
-      color: Colors.purpleLight,
-    }
+    // pic: {
+    //   width: 65,
+    //   height: 65,
+    // },
+    // button: {
+    //   color: Colors.purpleLight,
+    // },
+    // text: {
+    //   color: Colors.purpleLight,
+    // }
+
   }
 );
 

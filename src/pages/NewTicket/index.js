@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { View, Text, TextInput, TouchableOpacity, FlatList, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, FlatList, ScrollView, Image } from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/native'
 import {Picker} from '@react-native-community/picker';
 import * as ImagePicker from 'expo-image-picker';
@@ -11,6 +11,7 @@ import * as Location from 'expo-location';
 
 import colors from '../../assets/var/colors'
 import styles from './styles';
+import Overlay from '../../components/Overlay';
 
 const NewTicket = () => {
     const navigation = useNavigation();
@@ -113,11 +114,11 @@ const NewTicket = () => {
     <View style={styles.Container}>
         {
             overlayGeolocalization ? 
-            <View style={styles.OverlayBackground}>
+            <Overlay>
                 <View style={styles.OverlayContainer}>
                     <Text style={styles.OverlayText}>Obtendo sua localização</Text>
                 </View>
-            </View> 
+            </Overlay> 
             : null
         }
         <ScrollView 
@@ -207,11 +208,22 @@ const NewTicket = () => {
                         data={files}
                         horizontal={true}
                         renderItem={file => (
-                            <FileCard 
-                                photo={file.item.value}
-                                chave={file.item.key}
-                                onDelete={removePhoto}
-                            />
+                            <FileCard styles={styles.FileCard}> 
+                                <Image 
+                                    source={{uri: file.item.value.photoUri}}
+                                    style={styles.pic}
+                                />
+                                <TouchableOpacity
+                                    style={styles.button}
+                                >
+                                    <Text
+                                        style={styles.textFileCard}
+                                        onPress={() => removePhoto(file.item.key)}
+                                    >
+                                        Remover
+                                    </Text>
+                                </TouchableOpacity>
+                            </FileCard>
                         )}
                     />
                 </View>

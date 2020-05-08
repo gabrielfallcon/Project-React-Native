@@ -1,5 +1,8 @@
 import { StyleSheet } from 'react-native' 
 import colors from '../../assets/var/colors'
+import {Dimensions} from 'react-native'
+
+const {height, width} = Dimensions.get('window');
 
 export default StyleSheet.create({
   Container: {
@@ -94,6 +97,20 @@ export default StyleSheet.create({
     fontSize: 22,
     color: colors.purpleDark,
   },
+  AnexoItensContainer: {
+    flexDirection: 'row',
+    height: 108,
+  },
+  FileCard: {
+    maxWidth: 80,
+    maxHeight: 105,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  FileCardImage: {
+    width: 65,
+    height: 65,
+  },
   EnderecoLabelContainer: {
     width: '100%',
     height: '5%',
@@ -134,5 +151,28 @@ export default StyleSheet.create({
   ButtonText: {
     fontFamily: 'Roboto',
     color: colors.white,
-  }
+  },
+  OverlayButtonContainer: {
+    width: '100%',
+    height: 20,
+    marginBottom: 100,
+  },
+  OverlayButton: {
+    width: width-20,
+  },
+  OverlayButtonText: {
+    color: '#F00',
+    fontFamily: 'Roboto',
+    fontSize: 32,
+  },
+  OverlayImageContainer: {
+    height: "85%",
+    width: '90%',
+    alignItems: 'center',
+  },
+  OverlayImage: {
+    height: '100%',
+    width: '80%',
+  },
+  
 });

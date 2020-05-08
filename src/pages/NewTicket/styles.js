@@ -80,16 +80,6 @@ export default StyleSheet.create({
         color: '#851010',
 
     },
-    OverlayBackground: {
-        zIndex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.7)',
-        position: 'absolute',
-        height: '100%',
-        width: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
-
-    },
     OverlayContainer: {
         backgroundColor: '#FFF',
         height: '15%',
@@ -100,5 +90,18 @@ export default StyleSheet.create({
     OverlayText: {
         color: colors.primary,
         fontFamily: 'Roboto'
+    },
+    FileCard: {
+        padding: '10%',
+    },
+    pic: {
+        width: 65,
+        height: 65,
+    },
+    button: {
+        color: colors.purpleLight,
+    },
+    textFileCard: {
+        color: colors.purpleLight,
     }
 })

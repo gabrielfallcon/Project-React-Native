@@ -50,7 +50,7 @@ const ListTicket = () => {
 
     ]);
 
-    const navigateToTicketDeatil = (key, titulos, tipo, endereco, anexo, desc, lat, lon) => {
+    const navigateToTicketDetail = (key, titulos, tipo, endereco, anexo, desc, lat, lon, buttonText) => {
         navigation.navigate('DetalhesChamado', {
             chave: key,
             titulo: titulos,
@@ -59,7 +59,8 @@ const ListTicket = () => {
             anexo: anexo,
             desc: desc,
             lat: lat,
-            lon: lon
+            lon: lon,
+            buttonText: buttonText
         });
     }
     
@@ -76,7 +77,7 @@ const ListTicket = () => {
                         horizontal
                         renderItem={aberto => (
                             <TouchableOpacity
-                                onPress={() => navigateToTicketDeatil(
+                                onPress={() => navigateToTicketDetail(
                                     aberto.item.key,
                                     aberto.item.titulo,
                                     aberto.item.tipo,
@@ -84,7 +85,8 @@ const ListTicket = () => {
                                     aberto.item.anexo,
                                     aberto.item.desc,
                                     aberto.item.lat,
-                                    aberto.item.lon
+                                    aberto.item.lon,
+                                    'Aceitar'
                                 )}
                             >
                                 <CardHistoryService>
@@ -101,7 +103,40 @@ const ListTicket = () => {
                         )}
                     />
                 </View>
-                <Text style={styles.TitleServices}>Chamados em Aceitos</Text>
+                <Text style={styles.TitleServices}>Chamados Aceitos</Text>
+                <View style={styles.HistoryContainer}>
+                    <FlatList
+                        data={tickets}
+                        horizontal
+                        renderItem={aberto => (
+                            <TouchableOpacity
+                                onPress={() => navigateToTicketDetail(
+                                    aberto.item.key,
+                                    aberto.item.titulo,
+                                    aberto.item.tipo,
+                                    aberto.item.endereco,
+                                    aberto.item.anexo,
+                                    aberto.item.desc,
+                                    aberto.item.lat,
+                                    aberto.item.lon,
+                                    'Endereço'
+                                )}
+                            >
+                                <CardHistoryService>
+                                    <View style={styles.Types}>
+                                        <Text style={styles.TypesText}>Tipos:</Text>
+                                        <Text style={styles.TypesDesc}>{aberto.item.tipo}</Text>
+                                    </View>
+                                    <View style={styles.Types}>
+                                        <Text style={styles.TypesText}>Descrição:</Text>
+                                        <Text style={styles.TypesDesc}>{aberto.item.desc}</Text>
+                                    </View> 
+                                </CardHistoryService>
+                            </TouchableOpacity>
+                        )}
+                    />
+                </View>
+                {/* <Text style={styles.TitleServices}>Chamados em Aceitos</Text>
                 <View style={styles.HistoryContainer}>
                     <FlatList
                         data={tickets}
@@ -119,7 +154,7 @@ const ListTicket = () => {
                             </CardHistoryService>
                         )}
                     />
-                </View>
+                </View> */}
                 <Text style={styles.TitleServices}>Chamados em Fechados</Text>
                 <View style={styles.HistoryContainer}>
                     <FlatList

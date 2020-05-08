@@ -1,14 +1,17 @@
-import React from 'react';
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native'
 
 import styles from './styles'
 import FileCard from '../../components/FileCard'
+import Overlay from '../../components/Overlay'
 
 const TicketDetail = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const {chave, titulo, tipo, endereco, anexo, desc, lat, lon} = route.params;
+  const {chave, titulo, tipo, endereco, anexo, desc, lat, lon, buttonText} = route.params;
+  const [showImage, setShowImage] = useState(false);
+  const [imageUrl, setImageUrl] = useState('');
 
   const navigateToMap = () => {
     navigation.navigate('Mapa', {
@@ -17,10 +20,47 @@ const TicketDetail = () => {
     })
   }
 
+  const deleteFile = () => {
+    
+  }
+
+  const handleShowImage = (image) => {
+    setShowImage(true);
+    setImageUrl(image);
+  }
+
+  const handleCloseImage = () => {
+    setShowImage(false);
+    setImageUrl('');
+  }
+
   return (
+   
     <ScrollView
       contentContainerStyle={styles.Container}
     >
+       {
+          showImage ? 
+          <Overlay>
+            <View style={styles.OverlayButtonContainer}>
+              <TouchableOpacity 
+                style={styles.OverlayButton}
+                onPress={handleCloseImage}
+              >
+                <Text style={styles.OverlayButtonText}>X</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.OverlayImageContainer}>
+              <Image 
+                source={require('../../assets/images/PisosDanificados.jpg')}
+                style={styles.OverlayImage}
+                resizeMode='contain'
+                
+              />
+            </View>
+          </Overlay>
+          : null
+      }
         <View style={styles.TipoLabelContainer}>
           <Text style={styles.TipoLabel}>
             Tipo:
@@ -56,8 +96,51 @@ const TicketDetail = () => {
             Anexos:
           </Text>
         </View>
-        <View style={styles.AnexosItensContainer}>
-
+        <View style={styles.AnexoItensContainer}>
+          <TouchableOpacity
+            onPress={() => handleShowImage('../../assets/images/PisosDanificados.jpg')}
+          >
+            <FileCard styles={styles.FileCard}> 
+              <Image 
+                source={require('../../assets/images/PisosDanificados.jpg')}
+                style={styles.FileCardImage}
+                resizeMode='center'
+              />
+            </FileCard>   
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => handleShowImage('../../assets/images/PisosDanificados.jpg')}
+          >
+            <FileCard styles={styles.FileCard}> 
+              <Image 
+                source={require('../../assets/images/PisosDanificados.jpg')}
+                style={styles.FileCardImage}
+                resizeMode='center'
+              />
+            </FileCard>   
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => handleShowImage('../../assets/images/PisosDanificados.jpg')}
+          >
+            <FileCard styles={styles.FileCard}> 
+              <Image 
+                source={require('../../assets/images/PisosDanificados.jpg')}
+                style={styles.FileCardImage}
+                resizeMode='center'
+              />
+            </FileCard>   
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => handleShowImage('../../assets/images/PisosDanificados.jpg')}
+          >
+            <FileCard styles={styles.FileCard}> 
+              <Image 
+                source={require('../../assets/images/PisosDanificados.jpg')}
+                style={styles.FileCardImage}
+                resizeMode='center'
+              />
+            </FileCard>   
+          </TouchableOpacity>
         </View>
         <View style={styles.EnderecoLabelContainer}>
           <Text style={styles.EnderecoLabel}>
@@ -75,7 +158,7 @@ const TicketDetail = () => {
             onPress={navigateToMap}
           >
             <Text style={styles.ButtonText}>
-              Aceitar
+              {buttonText}
             </Text>
           </TouchableOpacity>
         </View>

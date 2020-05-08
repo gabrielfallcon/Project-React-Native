@@ -17,7 +17,11 @@ const Login = () => {
     const [hideCpf, setHideCpf] = useState(true);
     const [hideSenha, setHideSenha] = useState(true);
 
+    const tempCpfClient = '24567898060'
+    const tempCpfPrestador = '24567898061'
+
     const cpfPattern = /^([0-9]{3}?[\.]?[-]?[0-9]{3}?[\.]?[-]?[0-9]{3}?[-]?[0-9]{2})*$/g;
+    
 
     const capturarCpf = (textoDigitado) => {
         if (cpfPattern.test(textoDigitado) && textoDigitado !== '') setHideCpf(true);
@@ -76,7 +80,14 @@ const Login = () => {
                 <View style={styles.boxModelBtn}>
                     <TouchableOpacity
                         onPress={() => {
-                            if (hideCpf && hideSenha && cpf != '' && senha != '') navigation.navigate('Lista de Servicos');
+                            if (
+                                hideCpf && hideSenha && cpf != '' && senha != '' 
+                                && cpf === tempCpfClient
+                            ) navigation.navigate('Lista de Servicos');
+                            else if (
+                                hideCpf && hideSenha && cpf != '' && senha != '' 
+                                && cpf === tempCpfPrestador
+                            ) navigation.navigate('Lista Chamado');
                             else Alert.alert(
                                 'Erro ao Entrar',
                                 'Os campos digitados são invalidos, tente novamente.',
