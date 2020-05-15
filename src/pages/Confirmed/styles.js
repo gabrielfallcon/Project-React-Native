@@ -21,7 +21,7 @@ export default StyleSheet.create({
         fontFamily: 'Roboto',
         fontStyle: 'normal',
         fontWeight: '300',
-        fontSize: 60,
+        fontSize: 48,
         color: colors.purpleLight,
         marginBottom: 40
     },
@@ -29,7 +29,7 @@ export default StyleSheet.create({
         fontFamily: 'Roboto',
         fontStyle: 'normal',
         fontWeight: '400',
-        fontSize: 18,
+        fontSize: 20,
         color: colors.purpleLight,
         marginBottom: '50%'
     },
@@ -53,11 +53,11 @@ export default StyleSheet.create({
         width: 120,
         padding: 10,
         borderRadius: 10,
-        backgroundColor: colors.secondary,
+        backgroundColor: colors.purpleLight,
     },
     TextBtn: {
         fontSize: 22,
-        color: colors.purpleLight,
+        color: colors.white,
         textAlign: 'center'
     }
 })

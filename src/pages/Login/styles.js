@@ -45,7 +45,9 @@ export default StyleSheet.create({
         padding: 15,
         backgroundColor: colors.secondary,
         borderRadius: 6,
-        color: colors.purpleLight
+        color: colors.purpleLight,
+        borderColor: colors.purpleLight,
+        borderWidth: 1,
     },
     ErrorText: {
         marginBottom: 20,

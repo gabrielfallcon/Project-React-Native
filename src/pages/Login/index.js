@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import colors from '../../assets/var/colors'
 
-import fundo from '../../assets/images/fundoLogin.jpg'
+import fundo from '../../assets/images/fundo-constructor.jpg'
 
 import styles from './styles';
 
@@ -17,8 +17,11 @@ const Login = () => {
     const [hideCpf, setHideCpf] = useState(true);
     const [hideSenha, setHideSenha] = useState(true);
 
-    const tempCpfClient = '24567898060'
-    const tempCpfPrestador = '24567898061'
+    const tempCpfClient = '12345678910'
+    const tempCpfPrestador = '22222222222'
+
+    // const tempCpfClient = '24567898060'
+    // const tempCpfPrestador = '24567898061'
 
     const cpfPattern = /^([0-9]{3}?[\.]?[-]?[0-9]{3}?[\.]?[-]?[0-9]{3}?[-]?[0-9]{2})*$/g;
     
@@ -38,7 +41,7 @@ const Login = () => {
 
     return (
         <View style={styles.Container}>
-            <StatusBar barStyle='dark-content' backgroundColor="#BB86FC" />
+            <StatusBar barStyle='default' backgroundColor={colors.purpleLight} />
             <View style={styles.BoxModelLogin}>
 
                 <ImageBackground source={fundo} style={styles.logo}>

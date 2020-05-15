@@ -155,13 +155,13 @@ const ListTicket = () => {
                         )}
                     />
                 </View> */}
-                <Text style={styles.TitleServices}>Chamados em Fechados</Text>
+                <Text style={styles.TitleServices}>Chamados Finalizado</Text>
                 <View style={styles.HistoryContainer}>
                     <FlatList
                         data={tickets}
                         horizontal
                         renderItem={aberto => (
-                            <CardHistoryService>
+                            <CardHistoryService style={styles.CardHistoryService}>
                                 <View style={styles.Types}>
                                     <Text style={styles.TypesText}>Tipos:</Text>
                                     <Text style={styles.TypesDesc}>{aberto.item.tipo}</Text>

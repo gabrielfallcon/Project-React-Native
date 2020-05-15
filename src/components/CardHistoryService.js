@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
         width: 300,
         paddingVertical: 25,
         paddingHorizontal: 20,
-        backgroundColor: colors.secondary,
+        backgroundColor: colors.purpleLight,
         borderRadius: 14,
         position: 'relative',
         marginLeft: 10

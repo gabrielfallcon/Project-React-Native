@@ -45,10 +45,9 @@ export default StyleSheet.create({
         fontFamily: 'Roboto',
         fontStyle: 'normal',
         fontWeight: '300',
-        fontSize: 24,
+        fontSize: 22,
         color: colors.purpleLight,
         marginBottom: 30,
-        color: "#FFF",
         textAlign: 'center',
         marginTop: 30
     },
@@ -56,8 +55,8 @@ export default StyleSheet.create({
         fontFamily: 'Roboto',
         fontStyle: 'normal',
         fontWeight: '400',
-        fontSize: 16,
-        color: "#FFF",
+        fontSize: 15,
+        color: colors.purpleDark,
         textAlign: 'center',
         marginBottom: 30,
         paddingHorizontal: 20

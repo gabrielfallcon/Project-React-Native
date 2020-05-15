@@ -7,19 +7,22 @@ export default StyleSheet.create({
         height: '100%'
     },
     boxLogo: {
-        height: 80
+        height: 80,
+        width: '100%',
+        backgroundColor: colors.secondary,
+        justifyContent: 'center',
     },
     logo: {
         flex: 1,
         resizeMode: "cover",
         justifyContent: "center",
-        width: 80,
-        height: 80,
+        width: 70,
+        height: 70,
         marginHorizontal: 10,
         marginTop: 10
     },
     TitleServices:{
-        fontSize: 30,
+        fontSize: 20,
         marginBottom: 30,
         marginTop: 40,
         color: colors.purpleLight,
@@ -31,9 +34,6 @@ export default StyleSheet.create({
         backgroundColor: '#121212',
         padding: 20
     },
-    list: {
-
-    },
     ContainerImage: {
         height: '60%',
         width: 250,
@@ -43,13 +43,13 @@ export default StyleSheet.create({
     TextTitle: {
         textAlign: "left",
         color: colors.purpleLight,
-        fontSize: 20,
+        fontSize: 16,
         fontWeight: '200',
         marginTop: 20,
         marginBottom: 10,
     },
     TextDesc: {
-        fontSize: 16,
+        fontSize: 14,
         color: colors.purpleDark
     },
     ServicesContainer: {
@@ -68,7 +68,7 @@ export default StyleSheet.create({
         alignItems: 'center',
     },
     emptyHistoryTextDesc: {
-        fontSize: 16,
+        fontSize: 14,
         color: colors.purpleDark,
         textAlign: 'center',
         marginBottom: 10
@@ -109,16 +109,16 @@ export default StyleSheet.create({
     TypesText: {
         width: '50%',
         fontSize: 20,
-        color: colors.purpleDark
+        color: colors.white
     },
     TypesDesc: {
         width: '50%',
         fontSize: 14,
-        color: colors.purpleLight
+        color: colors.secondary
     },
     Status: {
         textAlign: 'center',
         fontSize: 22,
-        color: colors.purpleDark,
+        color: colors.white,
     },
 })

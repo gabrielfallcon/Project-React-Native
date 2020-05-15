@@ -22,7 +22,7 @@ export default StyleSheet.create({
         fontFamily: 'Roboto',
         fontStyle: 'normal',
         fontWeight: 'bold',
-        fontSize: 40,
+        fontSize: 30,
         color: colors.purpleLight,
     },
     TextTipoChamado: {
@@ -34,7 +34,6 @@ export default StyleSheet.create({
     },
     BoxModelInput: {
         width: '100%',
-        marginBottom: 20,
         alignItems: 'center',
         justifyContent: 'center',
         marginBottom: 10,

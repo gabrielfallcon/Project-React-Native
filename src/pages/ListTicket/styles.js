@@ -3,7 +3,7 @@ import colors from '../../assets/var/colors'
 
 export default StyleSheet.create({
     Container:{
-        backgroundColor: colors.primary,
+        backgroundColor: colors.secondary,
         height: '100%'
     },
     boxLogo: {
@@ -19,7 +19,7 @@ export default StyleSheet.create({
         marginTop: 10
     },
     TitleServices:{
-        fontSize: 30,
+        fontSize: 22,
         marginBottom: 30,
         marginTop: 40,
         color: colors.purpleLight,
@@ -95,12 +95,12 @@ export default StyleSheet.create({
     },
     TypesText: {
         width: '50%',
-        fontSize: 20,
-        color: colors.purpleDark
+        fontSize: 18,
+        color: colors.white
     },
     TypesDesc: {
         width: '50%',
         fontSize: 14,
-        color: colors.purpleLight
+        color: colors.secondary
     },
 })

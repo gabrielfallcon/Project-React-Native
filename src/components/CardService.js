@@ -28,7 +28,7 @@ const styles = StyleSheet.create(
     box: {
       height: 420,
       width: 290,
-      backgroundColor: '#121212',
+      backgroundColor: colors.secondary,
       padding: 20,
     },
     ContainerImage: {
