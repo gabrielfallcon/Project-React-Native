@@ -55,7 +55,6 @@ const NewTicket = () => {
             setOverlayGeolocalization(true);
             let location = await Location.getCurrentPositionAsync({});
             setOverlayGeolocalization(false);
-            console.log(location);
             setLocation(location);
         }
     }
@@ -154,7 +153,7 @@ const NewTicket = () => {
                 />
               
                 {
-                    hideTitulo ? console.log('sem view') : 
+                    hideTitulo ? null : 
                     <View>
                         <Text style={styles.ErrorText}>
                             O titulo não pode ser vazio ou ter caracteres especiais

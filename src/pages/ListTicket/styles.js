@@ -7,7 +7,25 @@ export default StyleSheet.create({
         height: '100%'
     },
     boxLogo: {
-        height: 80
+        flexDirection: 'row',
+        height: 80,
+        width: '100%',
+        backgroundColor: colors.secondary,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    headerButton: {
+        alignItems: 'center',
+        marginRight: 20,
+        justifyContent: 'center',
+        backgroundColor: colors.purpleLight,
+        height: '50%',
+        width: 100,
+        borderRadius: 8,
+
+    },
+    headerButtonText: {
+        color: colors.secondary,
     },
     logo: {
         flex: 1,

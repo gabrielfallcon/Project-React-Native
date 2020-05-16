@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, ImageBackground, TouchableOpacity, SafeAreaView, FlatList, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, ImageBackground, TouchableOpacity, 
+    SafeAreaView, FlatList, ScrollView, StyleSheet, AsyncStorage, TouchableHighlight } from 'react-native';
 
 import CardList from '../../components/CardList';
 import CardService from '../../components/CardService';
@@ -63,11 +64,24 @@ const ListTicket = () => {
             buttonText: buttonText
         });
     }
+
+    const handleLogOut = async () => {
+        await AsyncStorage.removeItem('user');
+        await AsyncStorage.removeItem('userType');
+
+        navigation.navigate('Login');
+    }
     
     return (
         <SafeAreaView style={styles.Container}>
             <View style={styles.boxLogo}>
                 <ImageBackground source={logo} style={styles.logo} />
+                <TouchableOpacity 
+                    style={styles.headerButton}
+                    onPress={handleLogOut}    
+                >
+                    <Text style={styles.headerButtonText}>Logout</Text>
+                </TouchableOpacity>
             </View>
             <ScrollView>
                 <Text style={styles.TitleServices}>Chamados em Aberto</Text>
@@ -75,6 +89,7 @@ const ListTicket = () => {
                     <FlatList
                         data={tickets}
                         horizontal
+                        showsHorizontalScrollIndicator={false}
                         renderItem={aberto => (
                             <TouchableOpacity
                                 onPress={() => navigateToTicketDetail(
@@ -108,6 +123,7 @@ const ListTicket = () => {
                     <FlatList
                         data={tickets}
                         horizontal
+                        showsHorizontalScrollIndicator={false}
                         renderItem={aberto => (
                             <TouchableOpacity
                                 onPress={() => navigateToTicketDetail(
@@ -160,6 +176,7 @@ const ListTicket = () => {
                     <FlatList
                         data={tickets}
                         horizontal
+                        showsHorizontalScrollIndicator={false}
                         renderItem={aberto => (
                             <CardHistoryService style={styles.CardHistoryService}>
                                 <View style={styles.Types}>

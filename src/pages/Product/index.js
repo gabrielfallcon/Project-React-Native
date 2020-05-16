@@ -8,7 +8,7 @@ const Product = () =>  {
     const navigation = useNavigation();
     const route = useRoute();
 
-    const {chave, titulo, descricao, imagem, tempo} = route.params;
+    const {chave, titulo, descricao, imagem} = route.params;
 
     const navigatoToNewTicket = () => {
         navigation.navigate('Novo Chamado', {
@@ -20,13 +20,13 @@ const Product = () =>  {
     <View style={styles.Container}>
         <View style={styles.imageContainer}>
             <Image 
-                source={require('../../assets/images/PisosDanificados.jpg')}
+                source={{uri: imagem}}
                 style={styles.image}
             />
         </View>
         <View style={styles.BoxModelPercusion}>
             <View style={styles.TextsFeedback}>
-                <Text style={styles.TextTitle}>{titulo} - {tempo}</Text>
+                <Text style={styles.TextTitle}>{titulo}</Text>
                 <Text style={styles.TextDetail}>
                     {descricao}
                 </Text> 

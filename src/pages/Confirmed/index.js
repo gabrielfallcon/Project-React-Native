@@ -14,7 +14,6 @@ const Confirmed = () => {
     const {geolocation: location} = route.params;
 
     const navigateToMap = () => {
-        console.log(location);
         navigation.navigate('Avaliacao', {
             geolocation: location
         })

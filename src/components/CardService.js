@@ -8,14 +8,14 @@ import colors from '../assets/var/colors'
 // import { Container } from './styles';
 
 const CardService = (props) => {
-  
+  const imageUri = props.imgSource;
   return (
     <View style={{...styles.box, ...props.cardStyles}}>
       <View style={{...styles.ContainerImage, ...props.imageStyles}}>
         <Image 
-          source={require('../assets/images/PisosDanificados.jpg')}
-          style={styles.image} 
-          resizeMode='cover'
+            source={{ uri: imageUri}}
+            style={styles.image}
+            resizeMode='cover'
         />
       </View>
       {props.children}
@@ -38,8 +38,8 @@ const styles = StyleSheet.create(
       borderRadius: 20,
     },
     image: {
-      maxHeight: 400,
-      maxWidth: 250,
+      height: 400,
+      width: 250,
       borderRadius: 20,
     }
   }

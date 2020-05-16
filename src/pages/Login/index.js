@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert, StatusBar, ImageBackground} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, AsyncStorage, TextInput, TouchableOpacity, Alert, StatusBar, ImageBackground, Button} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import colors from '../../assets/var/colors'
@@ -7,6 +7,7 @@ import colors from '../../assets/var/colors'
 import fundo from '../../assets/images/fundo-constructor.jpg'
 
 import styles from './styles';
+import api from '../../services/api';
 
 const Login = () => {
     const navigation = useNavigation();
@@ -17,13 +18,46 @@ const Login = () => {
     const [hideCpf, setHideCpf] = useState(true);
     const [hideSenha, setHideSenha] = useState(true);
 
-    const tempCpfClient = '12345678910'
-    const tempCpfPrestador = '22222222222'
-
-    // const tempCpfClient = '24567898060'
-    // const tempCpfPrestador = '24567898061'
-
     const cpfPattern = /^([0-9]{3}?[\.]?[-]?[0-9]{3}?[\.]?[-]?[0-9]{3}?[-]?[0-9]{2})*$/g;
+
+    useEffect(() => {
+        AsyncStorage.getItem('user').then(user => {
+            if(user) {
+                AsyncStorage.getItem('userType').then(userType => {
+                    if(userType === 'prestador') return navigation.navigate('Lista Chamado');
+                    if(userType === 'cliente') return navigation.navigate('Lista de Servicos');
+                }) 
+            }
+        })
+    }, []);
+
+    const handleLogin = async () => {
+        const response = await api.post('/loginApp', {
+                cpf: cpf,
+                password: senha
+        });
+        const {status, _id, typeUser} = response.data
+        if(status === false) {
+            return Alert.alert(
+                'Erro ao Entrar',
+                'Os campos digitados são invalidos, tente novamente.',
+                [{
+                    text: 'Ok',
+                    style: 'default'
+                }],
+                { cancelable: false }
+            );
+        }
+       
+        AsyncStorage.setItem('user', _id);
+        AsyncStorage.setItem('userType', typeUser);
+
+        setCpf('');
+        setSenha('');
+
+        if(typeUser === 'prestador') return navigation.navigate('Lista Chamado');
+        if(typeUser === 'cliente') return navigation.navigate('Lista de Servicos');
+    }
     
 
     const capturarCpf = (textoDigitado) => {
@@ -41,7 +75,7 @@ const Login = () => {
 
     return (
         <View style={styles.Container}>
-            <StatusBar barStyle='default' backgroundColor={colors.purpleLight} />
+            <StatusBar barStyle='default' backgroundColor={colors.purpleLight} /> 
             <View style={styles.BoxModelLogin}>
 
                 <ImageBackground source={fundo} style={styles.logo}>
@@ -56,6 +90,7 @@ const Login = () => {
                         placeholderTextColor={colors.purpleLight}
                         onChangeText={capturarCpf}
                         value={cpf}
+                        keyboardType='numeric'
                     />
                     <View>
                         {
@@ -71,6 +106,7 @@ const Login = () => {
                         secureTextEntry={true}
                         onChangeText={capturarSenha}
                         value={senha}
+                        autoCapitalize='none'
                     />
                     <View>
                         {
@@ -82,25 +118,7 @@ const Login = () => {
                 </View>
                 <View style={styles.boxModelBtn}>
                     <TouchableOpacity
-                        onPress={() => {
-                            if (
-                                hideCpf && hideSenha && cpf != '' && senha != '' 
-                                && cpf === tempCpfClient
-                            ) navigation.navigate('Lista de Servicos');
-                            else if (
-                                hideCpf && hideSenha && cpf != '' && senha != '' 
-                                && cpf === tempCpfPrestador
-                            ) navigation.navigate('Lista Chamado');
-                            else Alert.alert(
-                                'Erro ao Entrar',
-                                'Os campos digitados são invalidos, tente novamente.',
-                                [{
-                                    text: 'Ok',
-                                    style: 'default'
-                                }],
-                                { cancelable: false }
-                            );
-                        }}
+                        onPress={handleLogin}
                     >
                         <View style={styles.InputBtn}>
                             <Text style={styles.TextBtn}>Entrar</Text>
