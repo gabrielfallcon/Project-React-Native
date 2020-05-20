@@ -20,14 +20,31 @@ const ListServices = () => {
     const navigation = useNavigation();
 
     const [services, setServices] = useState([]);
+    const [history, setHistory] = useState([]);
 
     const loadServices = async () => {
         const response = await api.get('/services');
         setServices(response.data);
     }
 
+    const loadChamadosByUser = async () => {
+        const id = await AsyncStorage.getItem('user');
+        // const id = '5ec1cdb883757d5be1c78fed';
+        const chamado = await api.get(`/chamados/user/${id}`);
+
+        const dataChamado = await Promise.all(
+            chamado.data.map(async (obj) => {
+                    const services = await api.get(`/services/${obj.servico}`)
+                    return {...obj, serviceName: services.data.name}
+                }
+            )
+        );
+        setHistory(dataChamado);
+    }
+
     useEffect(() => {
         loadServices();
+        loadChamadosByUser();
     }, [])
 
     const navigateToProduct = (key, title, desc, img) => {
@@ -38,20 +55,18 @@ const ListServices = () => {
             imagem: img,
         })
     }
-    const initialState = [{ key: '1', type: 'Pisos danificados', titulo: 'Preciso que troquem o meu piso', status: 'Em andamento' },
-    { key: '2', type: 'Pisos danificados', titulo: 'Preciso que troquem o meu piso', status: 'Em andamento' },
-    { key: '3', type: 'Pisos danificados', titulo: 'Preciso que troquem o meu piso', status: 'Em andamento' },
-    { key: '4', type: 'Pisos danificados', titulo: 'Preciso que troquem o meu piso', status: 'Em andamento' },]
 
-    const [history, setHistory] = useState(initialState);
-
-    const removeHistory = (keyToRemove) => {
-        setHistory(historicos => {
-            return historicos.filter(historico => historico.key !== keyToRemove);
-        });
+    const removeHistory = async (keyToRemove) => {
+        const response = await api.put(`/chamado/${keyToRemove}`, {status: "Fechado"});
+        const arr = history;
+        const index = arr.findIndex(obj => obj._id === keyToRemove);
+        arr[index].status = "Fechado";
+    
+        setHistory([...arr]);
     }
+
     const reloadHistory = () => {
-        setHistory(initialState);
+        loadChamadosByUser();
     }
 
     let viewEmptyHistory
@@ -78,19 +93,20 @@ const ListServices = () => {
                 data={history}
                 horizontal
                 showsHorizontalScrollIndicator={false}
+                keyExtractor={historico => historico._id}
                 renderItem={historico => (
                     <CardHistoryService
                         onDelete={removeHistory}
                     > 
                         <TouchableOpacity 
                             style={styles.Close}
-                            onPress={() => deleteAlert(historico.item.key)}
+                            onPress={() => deleteAlert(historico.item._id)}
                         >
                             <Text style={styles.CloseText}>X</Text>
                         </TouchableOpacity>
                         <View style={styles.Types}>
-                            <Text style={styles.TypesText}>Tipos:</Text>
-                            <Text style={styles.TypesDesc}>{historico.item.type}</Text>
+                            <Text style={styles.TypesText}>Tipo:</Text>
+                            <Text style={styles.TypesDesc}>{historico.item.serviceName}</Text>
                         </View>
                         <View style={styles.Types}>
                             <Text style={styles.TypesText}>Titulo:</Text>
@@ -103,8 +119,8 @@ const ListServices = () => {
     }
 
     const deleteAlert = (keyToRemove) => Alert.alert(
-        'Excluir historico',
-        'Você realmente deseja excluir este historico?',
+        'Fechar chamado',
+        'Você realmente deseja fechar este chamado?',
         [
             {
                 text: 'Não',

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { View, Text, TextInput, TouchableOpacity, FlatList, ScrollView, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, FlatList, ScrollView, Image, AsyncStorage } from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/native'
 import {Picker} from '@react-native-community/picker';
 import * as ImagePicker from 'expo-image-picker';
@@ -12,18 +12,19 @@ import * as Location from 'expo-location';
 import colors from '../../assets/var/colors'
 import styles from './styles';
 import Overlay from '../../components/Overlay';
+import api from '../../services/api';
 
 const NewTicket = () => {
     const navigation = useNavigation();
     const route = useRoute();
 
-    const {tipo} = route.params;
+    const {tipo, serviceId} = route.params;
 
-    const navigateToConfirmed = () => {
-        navigation.navigate('Confirmacao Chamado', {
-            geolocation: location,
-        })
-    }
+    // const navigateToConfirmed = () => {
+    //     navigation.navigate('Confirmacao Chamado', {
+    //         geolocation: location,
+    //     })
+    // }
 
     const patterWithOutEspecialCaracter = /[^ \nA-Za-z0-9À-ÖØ-öø-ÿ/]/g
 
@@ -32,10 +33,42 @@ const NewTicket = () => {
     const [address, setAddress] = useState({endereco: 'select',});
     const [files, setFiles] = useState([]);
     const [cont, setCont] = useState(0);
-    const [location, setLocation] = useState(null)
+    const [location, setLocation] = useState(null);
     const [hideTitulo, setHideTitulo] = useState(true);
     const [hideDesc, setHideDesc] = useState(true);
     const [overlayGeolocalization, setOverlayGeolocalization] = useState(false);
+
+    const createChamado = async () => {
+        const clienteId = await AsyncStorage.getItem('user');
+        const data = new FormData();
+
+        const newFiles = files.map(obj => {
+            return obj.values
+        });
+        // console.log(newFiles);
+        data.append('prestadorId', '5ebe31b487374240c8a2a1df');
+        data.append('clienteId', clienteId);
+        data.append('servicoId', serviceId);
+        data.append('descricao', desc);
+        data.append('endereco', 'Rua Taquari, 546 - Mooca');
+        if(location) {
+            data.append('lat', location.coords.latitude);
+            data.append('lon', location.coords.longitude);
+        }
+        for(const file of newFiles) {
+            console.log(file);
+            data.append('anexos', file);
+        }
+        data.append('titulo', titulo);
+            const response = await api.post('/chamado', data)
+                .catch(err => console.log(err));
+
+        
+
+        navigation.navigate('Confirmacao Chamado', {
+            geolocation: location,
+        })
+    }
 
     const getPermissionAsync = async () => {
         if (Constants.platform.ios) {
@@ -50,17 +83,16 @@ const NewTicket = () => {
         if(address.endereco === 'geolocalizacao'){
             let { status } = await Location.requestPermissionsAsync();
             if(status !== 'granted') {
-                alert('Desculpe mas é necesseario que você permita o acesso a localização');
+                return alert('Desculpe mas é necesseario que você permita o acesso a localização');
             }
             setOverlayGeolocalization(true);
             let location = await Location.getCurrentPositionAsync({});
             setOverlayGeolocalization(false);
+            // console.log(location);
             setLocation(location);
         }
     }
 
-
-    
     useEffect(() => {
         getGeolocationAsync();
     }, [address]);
@@ -70,16 +102,23 @@ const NewTicket = () => {
         try {
             let photo = await ImagePicker.launchImageLibraryAsync(
                     {
-                        allowsMultipleSelection: true, 
+                        allowsMultipleSelection: true,
                         mediaTypes: ImagePicker.MediaTypeOptions.All,
                         quality: 1,
+                        
                     }
                 )
                 if (!photo.cancelled) {
                     setCont((cont + 1));
+                    let uriParts = photo.uri.split('.');
+                    let fileType = uriParts[uriParts.length - 1];
                     setFiles([{
                         key: cont.toString(),
-                        value: {photoUri: photo.uri}
+                        values:{
+                            uri: photo.uri,
+                            type: `image/${fileType}`,
+                            name: `photo${cont}.${fileType}`
+                        }
                     }, ...files])
                 }
         } catch (E) {
@@ -108,7 +147,6 @@ const NewTicket = () => {
         setDesc(textoDigitado);
     }
 
-
   return (
     <View style={styles.Container}>
         {
@@ -135,6 +173,7 @@ const NewTicket = () => {
             
             <View style={styles.TituloContainer}>
                 <Text style={styles.Textchamado}>Novo Chamado</Text>
+                <Text style={styles.TextTipoChamado}>Tipo: {tipo}</Text>
             </View>
             <View style={styles.BoxModelInput}>
                 {/* <TextInput 
@@ -188,8 +227,6 @@ const NewTicket = () => {
                     {/* <Picker.Item label="Selecione um Endereço" value="select" color="grey"/> */}
                     <Picker.Item label="Geolocalização" value="geolocalizacao" />
                     <Picker.Item label="Endereço 1" value="endereco1" />
-                    <Picker.Item label="Endereço 2" value="endereco2" />
-                    <Picker.Item label="Endereço 3" value="endereco3" />
 
                 </Picker>
 
@@ -209,7 +246,7 @@ const NewTicket = () => {
                         renderItem={file => (
                             <FileCard styles={styles.FileCard}> 
                                 <Image 
-                                    source={{uri: file.item.value.photoUri}}
+                                    source={{uri: file.item.values.uri}}
                                     style={styles.pic}
                                 />
                                 <TouchableOpacity
@@ -229,7 +266,7 @@ const NewTicket = () => {
             </View>
             <View style={styles.boxModelBtn}>
                 <TouchableOpacity 
-                    onPress={navigateToConfirmed}
+                    onPress={createChamado}
                     style={styles.InputBtn}
                 >
                     <Text style={styles.TextBtn}>Cadastrar</Text>

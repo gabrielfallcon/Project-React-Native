@@ -12,6 +12,7 @@ const Product = () =>  {
 
     const navigatoToNewTicket = () => {
         navigation.navigate('Novo Chamado', {
+            serviceId: chave,
             tipo: titulo
         })
     }

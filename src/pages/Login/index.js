@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, AsyncStorage, TextInput, TouchableOpacity, Alert, StatusBar, ImageBackground, Button} from 'react-native';
+import { View, Text, AsyncStorage, TextInput, 
+    TouchableOpacity, Alert, StatusBar, ImageBackground, Button} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import colors from '../../assets/var/colors'

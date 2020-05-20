@@ -29,7 +29,7 @@ export default StyleSheet.create({
         fontFamily: 'Roboto',
         fontStyle: 'normal',
         fontWeight: 'bold',
-        fontSize: 32,
+        fontSize: 10,
         color: colors.purpleLight,
     },
     BoxModelInput: {
@@ -87,7 +87,7 @@ export default StyleSheet.create({
         alignItems: 'center',
     },
     OverlayText: {
-        color: colors.primary,
+        color: colors.purpleLight,
         fontFamily: 'Roboto'
     },
     FileCard: {
