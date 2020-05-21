@@ -1,66 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, ImageBackground, TouchableOpacity, 
     SafeAreaView, FlatList, ScrollView, StyleSheet, AsyncStorage, TouchableHighlight } from 'react-native';
-
 import CardList from '../../components/CardList';
 import CardService from '../../components/CardService';
 import CardHistoryService from '../../components/CardHistoryService';
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native';
 
+import api from '../../services/api';
 import logo from '../../assets/images/logo.png'
 
 import styles from './styles';
 
 const ListTicket = () => {
+    
     const navigation = useNavigation();
 
-    const [tickets, setTickets] = useState([
-        {
-            key: '1', titulo: 'Meus pisos estão danificados', 
-            tipo: 'Pisos Danificados',
-            endereco: 'Rua Taquari, 546 - Mooca',
-            lat: '-23.551320', lon: '-46.597740',
-            anexo: '../assets/images/PisosDanificados.jpg',
-            desc: 'Preciso que seja trocados os meus pisos que estão danificados.'
-        },
-        {
-            key: '2', titulo: 'Meus pisos estão danificados', 
-            tipo: 'Pisos Danificados',
-            endereco: 'Rua Taquari, 546 - Mooca',
-            lat: '-23.551320', lon: '-46.597740',
-            anexo: '../assets/images/PisosDanificados.jpg',
-            desc: 'Preciso que seja trocados os meus pisos que estão danificados.'
-        },
-        {
-            key: '3', titulo: 'Meus pisos estão danificados', 
-            tipo: 'Pisos Danificados',
-            endereco: 'Rua Taquari, 546 - Mooca',
-            lat: '-23.551320', lon: '-46.597740',
-            anexo: '../assets/images/PisosDanificados.jpg',
-            desc: 'Preciso que seja trocados os meus pisos que estão danificados.'
-        },
-        {
-            key: '4', titulo: 'Meus pisos estão danificados', 
-            tipo: 'Pisos Danificados',
-            endereco: 'Rua Taquari, 546 - Mooca',
-            lat: '-23.551320', lon: '-46.597740',
-            anexo: '../assets/images/PisosDanificados.jpg',
-            desc: 'Preciso que seja trocados os meus pisos que estão danificados.'
-        },
-       
+    const [tickets, setTickets] = useState([]);
+    const [acceptedTickets, setAcceptedTickets] = useState([]);
+    const [closedTickets, setClosedTickets] = useState([]);
 
-    ]);
+    const getTickets = async () => {
+        const providerId = await AsyncStorage.getItem('user');
+        const tickets = await api.get('/chamados');
+        setTickets(tickets.data);
+        // const providerTickets = await api.get(`/chamados/provider/${providerId}`);
 
-    const navigateToTicketDetail = (key, titulos, tipo, endereco, anexo, desc, lat, lon, buttonText) => {
+        // const accTickets = providerTickets.data.filter(function(obj)  {
+        //     return obj.status === 'Em Andamento';
+        // });
+
+        // const clsTickets = providerTickets.data.filter(obj => {
+        //     return obj.status === 'Fechado';
+        // });
+        
+    }
+
+    useEffect(() => {
+        getTickets();
+    }, [])
+
+    const navigateToTicketDetail = (id, buttonText) => {
         navigation.navigate('DetalhesChamado', {
-            chave: key,
-            titulo: titulos,
-            tipo: tipo,
-            endereco: endereco,
-            anexo: anexo,
-            desc: desc,
-            lat: lat,
-            lon: lon,
+            id: id,
             buttonText: buttonText
         });
     }
@@ -89,29 +70,23 @@ const ListTicket = () => {
                     <FlatList
                         data={tickets}
                         horizontal
+                        keyExtractor={aberto => aberto._id}
                         showsHorizontalScrollIndicator={false}
                         renderItem={aberto => (
                             <TouchableOpacity
                                 onPress={() => navigateToTicketDetail(
-                                    aberto.item.key,
-                                    aberto.item.titulo,
-                                    aberto.item.tipo,
-                                    aberto.item.endereco,
-                                    aberto.item.anexo,
-                                    aberto.item.desc,
-                                    aberto.item.lat,
-                                    aberto.item.lon,
+                                    aberto.item._id,
                                     'Aceitar'
                                 )}
                             >
                                 <CardHistoryService>
                                     <View style={styles.Types}>
-                                        <Text style={styles.TypesText}>Tipos:</Text>
-                                        <Text style={styles.TypesDesc}>{aberto.item.tipo}</Text>
-                                    </View>
+                                        <Text style={styles.TypesText}>Titulo:</Text>
+                                        <Text style={styles.TypesDesc}>{aberto.item.titulo}</Text>
+                                    </View> 
                                     <View style={styles.Types}>
                                         <Text style={styles.TypesText}>Descrição:</Text>
-                                        <Text style={styles.TypesDesc}>{aberto.item.desc}</Text>
+                                        <Text style={styles.TypesDesc}>{aberto.item.descricao}</Text>
                                     </View> 
                                 </CardHistoryService>
                             </TouchableOpacity>
@@ -121,20 +96,13 @@ const ListTicket = () => {
                 <Text style={styles.TitleServices}>Chamados Aceitos</Text>
                 <View style={styles.HistoryContainer}>
                     <FlatList
-                        data={tickets}
+                        data={acceptedTickets}
                         horizontal
                         showsHorizontalScrollIndicator={false}
                         renderItem={aberto => (
                             <TouchableOpacity
                                 onPress={() => navigateToTicketDetail(
-                                    aberto.item.key,
-                                    aberto.item.titulo,
-                                    aberto.item.tipo,
-                                    aberto.item.endereco,
-                                    aberto.item.anexo,
-                                    aberto.item.desc,
-                                    aberto.item.lat,
-                                    aberto.item.lon,
+                                    aberto.item._id,
                                     'Endereço'
                                 )}
                             >
@@ -174,7 +142,7 @@ const ListTicket = () => {
                 <Text style={styles.TitleServices}>Chamados Finalizado</Text>
                 <View style={styles.HistoryContainer}>
                     <FlatList
-                        data={tickets}
+                        data={closedTickets}
                         horizontal
                         showsHorizontalScrollIndicator={false}
                         renderItem={aberto => (

@@ -61,13 +61,11 @@ const ListServices = () => {
         const arr = history;
         const index = arr.findIndex(obj => obj._id === keyToRemove);
         arr[index].status = "Fechado";
-    
+
         setHistory([...arr]);
     }
 
-    const reloadHistory = () => {
-        loadChamadosByUser();
-    }
+   
 
     let viewEmptyHistory
     if (history.length === 0) {
@@ -81,7 +79,7 @@ const ListServices = () => {
                 </Text>
                 <TouchableOpacity 
                     style={styles.ReloadBtn}
-                    onPress={reloadHistory}
+                    onPress={() => loadChamadosByUser()}
                 >
                     <Text style={styles.ReloadTextBtn}>Recarregar</Text>
                 </TouchableOpacity>

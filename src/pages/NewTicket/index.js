@@ -30,40 +30,54 @@ const NewTicket = () => {
 
     const [titulo, setTitulo] = useState(null);
     const [desc, setDesc] = useState(null)
-    const [address, setAddress] = useState({endereco: 'select',});
+    const [itemPick, setItemPick] = useState({endereco: 'select',});
     const [files, setFiles] = useState([]);
     const [cont, setCont] = useState(0);
     const [location, setLocation] = useState(null);
     const [hideTitulo, setHideTitulo] = useState(true);
     const [hideDesc, setHideDesc] = useState(true);
     const [overlayGeolocalization, setOverlayGeolocalization] = useState(false);
+    const [cliente, setCliente] = useState(null);
+    const [address, setAddress] = useState('');
+
+    useEffect(() => {
+        getUser();
+    }, []);
+
+    const getUser = async () => {
+        const clienteId = await AsyncStorage.getItem('user');
+        const response = await api.get(`/users/${clienteId}`)
+                .catch(err => console.log(err));
+        setCliente(response.data);
+        setAddress(response.data.address);
+    }
 
     const createChamado = async () => {
-        const clienteId = await AsyncStorage.getItem('user');
+        // const clienteId = await AsyncStorage.getItem('user');
         const data = new FormData();
 
-        const newFiles = files.map(obj => {
-            return obj.values
-        });
-        // console.log(newFiles);
-        data.append('prestadorId', '5ebe31b487374240c8a2a1df');
-        data.append('clienteId', clienteId);
+        // data.append('prestadorId', '5ebe31b487374240c8a2a1df');
+        data.append('clienteId', cliente._id);
         data.append('servicoId', serviceId);
         data.append('descricao', desc);
-        data.append('endereco', 'Rua Taquari, 546 - Mooca');
         if(location) {
             data.append('lat', location.coords.latitude);
             data.append('lon', location.coords.longitude);
         }
-        for(const file of newFiles) {
-            console.log(file);
-            data.append('anexos', file);
+        else {
+            data.append('endereco', cliente.address);
+        }
+        if(files.length > 0) {
+            const newFiles = files.map(obj => {
+                return obj.values
+            });
+            for(const file of newFiles) {
+                data.append('anexos', file);
+            }
         }
         data.append('titulo', titulo);
             const response = await api.post('/chamado', data)
                 .catch(err => console.log(err));
-
-        
 
         navigation.navigate('Confirmacao Chamado', {
             geolocation: location,
@@ -80,7 +94,7 @@ const NewTicket = () => {
     }
 
     const getGeolocationAsync = async () => {
-        if(address.endereco === 'geolocalizacao'){
+        if(itemPick.endereco === 'geolocalizacao'){
             let { status } = await Location.requestPermissionsAsync();
             if(status !== 'granted') {
                 return alert('Desculpe mas é necesseario que você permita o acesso a localização');
@@ -95,7 +109,7 @@ const NewTicket = () => {
 
     useEffect(() => {
         getGeolocationAsync();
-    }, [address]);
+    }, [itemPick]);
 
     const getPhoto = async () => {
         await getPermissionAsync();
@@ -217,16 +231,16 @@ const NewTicket = () => {
                 }
         
                 <Picker
-                    selectedValue={address.endereco}
+                    selectedValue={itemPick.endereco}
                     style={styles.TextInput}
                     onValueChange={(itemValue, itemIndex) => 
-                        setAddress({endereco: itemValue})}
+                        setItemPick({endereco: itemValue})}
                     prompt={'Selecione um Endereço'}
                     mode={'dialog'}
                 >
                     {/* <Picker.Item label="Selecione um Endereço" value="select" color="grey"/> */}
                     <Picker.Item label="Geolocalização" value="geolocalizacao" />
-                    <Picker.Item label="Endereço 1" value="endereco1" />
+                    <Picker.Item label={address} value="endereco" />
 
                 </Picker>
 
