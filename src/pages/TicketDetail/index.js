@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, 
+  Image, AsyncStorage, FlatList, SafeAreaView } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native'
 
 import styles from './styles'
@@ -17,16 +18,30 @@ const TicketDetail = () => {
   const [imageUrl, setImageUrl] = useState('');
 
   const navigateToMap = async () => {
+    const providerId = await AsyncStorage.getItem('user');
+
     if(buttonText === 'Aceitar') {
       const response = await api.put(`/chamado/${ticket._id}`, {
+        provider: providerId,
         status: "Em Andamento"
       });
-      
     }
-    navigation.navigate('Mapa', {
-      lat: lat,
-      lon: lon
-    })
+    let obj = {};
+
+    if(ticket.lat && ticket.lon) {
+      obj = {
+        lat: ticket.lat,
+        lon: ticket.lon,
+        id: ticket._id
+      }
+    } else {
+      obj = {
+        endereco: ticket.endereco,
+        id: ticket._id
+      }
+    }
+
+    navigation.navigate('Mapa', obj);
   }
 
   const getTicket = async () => {
@@ -37,8 +52,8 @@ const TicketDetail = () => {
   }
 
   useEffect(() => {
-    getTicket();
-  })
+      getTicket();
+  }, [])
 
   const handleShowImage = (image) => {
     setShowImage(true);
@@ -54,6 +69,7 @@ const TicketDetail = () => {
    
     <ScrollView
       contentContainerStyle={styles.Container}
+      nestedScrollEnabled={true}
     >
        {
           showImage ? 
@@ -68,10 +84,9 @@ const TicketDetail = () => {
             </View>
             <View style={styles.OverlayImageContainer}>
               <Image 
-                source={require('../../assets/images/PisosDanificados.jpg')}
+                source={{uri: imageUrl}}
                 style={styles.OverlayImage}
                 resizeMode='contain'
-                
               />
             </View>
           </Overlay>
@@ -103,9 +118,11 @@ const TicketDetail = () => {
           </Text>
         </View>
         <View style={styles.DescricaoTextContainer}>
-          <Text style={styles.DescricaoText}>
-            {ticket.descricao}
-          </Text>
+          <ScrollView style={styles.DescricaoTextScroll} nestedScrollEnabled={true} >
+            <Text style={styles.DescricaoText}>
+              {ticket.descricao}
+            </Text>
+          </ScrollView>
         </View>
         <View style={styles.EnderecoLabelContainer}>
           <Text style={styles.EnderecoLabel}>
@@ -123,17 +140,28 @@ const TicketDetail = () => {
           </Text>
         </View>
         <View style={styles.AnexoItensContainer}>
-          <TouchableOpacity
-            onPress={() => handleShowImage('../../assets/images/PisosDanificados.jpg')}
-          >
-            <FileCard styles={styles.FileCard}> 
-              <Image 
-                source={require('../../assets/images/PisosDanificados.jpg')}
-                style={styles.FileCardImage}
-                resizeMode='center'
-              />
-            </FileCard>   
-          </TouchableOpacity>
+          
+            <FlatList 
+              data={ticket.anexoUrl}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              keyExtractor={anexo => anexo}
+              renderItem={anexo => (
+                <TouchableOpacity
+                  onPress={() => handleShowImage(anexo.item)}
+                >
+                <FileCard styles={styles.FileCard}> 
+                  <Image 
+                    source={{ uri: anexo.item }}
+                    style={styles.FileCardImage}
+                    resizeMode='center'
+                  />
+                </FileCard> 
+                </TouchableOpacity>
+              )}
+            />
+             
+         
         </View>
         <View style={styles.ButtonContainer}>
           <TouchableOpacity 

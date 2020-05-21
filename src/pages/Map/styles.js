@@ -43,9 +43,8 @@ export default StyleSheet.create({
         fontStyle: 'normal',
         fontWeight: '300',
         fontSize: 28,
-        color: colors.purpleLight,
+        color: colors.purpleDark,
         marginBottom: 10,
-        color: "#FFF",
         textAlign: 'center',
         marginTop: 30
     },
@@ -54,7 +53,7 @@ export default StyleSheet.create({
         fontStyle: 'normal',
         fontWeight: '400',
         fontSize: 16,
-        color: "#FFF",
+        color: colors.purpleDark,
         textAlign: 'center',
         marginBottom: 30
     },
@@ -62,10 +61,15 @@ export default StyleSheet.create({
         width: 120,
         padding: 10,
         borderRadius: 10,
-        backgroundColor: colors.primary,
+        backgroundColor: colors.purpleLight,
         marginTop: 10
     },
     TextBtn: {
+        fontSize: 22,
+        color: colors.primary,
+        textAlign: 'center'
+    },
+    WazeTextBtn: {
         fontSize: 22,
         color: colors.purpleLight,
         textAlign: 'center'

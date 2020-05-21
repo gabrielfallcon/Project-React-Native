@@ -5,7 +5,7 @@ import Colors from '../assets/var/colors';
 const FileCard = (props) => {
   return (
     <View style={{...styles.card, ...props.styles}}>
-        {props.children}
+      {props.children}
     </View>
   );
 }

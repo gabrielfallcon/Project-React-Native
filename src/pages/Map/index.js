@@ -6,12 +6,13 @@ import { Linking } from 'expo';
 import styles from './styles';
 import fundo from '../../assets/images/fundoMap.jpg';
 import profile from '../../assets/images/profile.jpg'
+import api from '../../services/api';
 
 
 const Map = () => {
     const navigation = useNavigation();
     const route = useRoute();
-    const {lat, lon} = route.params;
+    const {lat, lon, id, endereco} = route.params;
 
     const openWaze = () => {
         let zoom = '6';
@@ -25,8 +26,11 @@ const Map = () => {
         Linking.openURL(url);
     }
 
-    const navigateToFinished = () => {
-        navigation.navigate('Chamado Finalizado')
+    const navigateToFinished = async () => {
+        const response = await api.put(`/chamado/${id}`, {
+            status: "Fechado"
+          });
+        navigation.navigate('Chamado Finalizado');
     }
     
   return (
@@ -40,17 +44,17 @@ const Map = () => {
                 </ImageBackground>
                 <View style={styles.TextsFeedback}>
                     <Text style={styles.TextTitle}>
-                        Você está chegando na residência de Gabriel!
+                        Abra a rota no waze
                     </Text>
                     <Text style={styles.TextDetail}>
-                        previsão de chegada: 12:50
+                        para ir até o cliente!
                     </Text>
                 </View>
                 <TouchableOpacity
                     onPress={openWaze}
                 >
                     <View style={styles.btnMaps}>
-                        <Text style={styles.TextBtn}>Abrir no waze</Text>
+                        <Text style={styles.WazeTextBtn}>Abrir no waze</Text>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity
