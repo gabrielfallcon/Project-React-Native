@@ -131,7 +131,9 @@ const TicketDetail = () => {
         </View>
         <View style={styles.EnderecoTextContainer}>
           <Text style={styles.EnderecoText}>
-            {ticket.endereco}
+            {
+              ticket.endereco ? ticket.endereco : "Nao foi definido endereço"
+            }
           </Text>
         </View>
         <View style={styles.AnexoLabelContainer}>

@@ -75,7 +75,7 @@ export default StyleSheet.create({
     },
     HistoryContainer: {
         width: '100%', 
-        height: 200, 
+        height: 230, 
         justifyContent: 'center',
     },
     emptyHistoryContainer: {
@@ -136,4 +136,21 @@ export default StyleSheet.create({
         fontSize: 22,
         color: colors.white,
     },
+    avaliationBtn: {
+        alignItems: 'center',
+        marginBottom: 20,
+      
+    },
+    avaliationBtnTxt: {
+        fontFamily: 'Roboto',
+        fontSize: 16,
+        color: colors.primary,
+        borderBottomWidth: 3,
+        borderBottomColor: colors.purpleDark,
+       
+
+    },
+    blankView: {
+        marginBottom: 46,
+    }
 })

@@ -39,6 +39,7 @@ const NewTicket = () => {
     const [overlayGeolocalization, setOverlayGeolocalization] = useState(false);
     const [cliente, setCliente] = useState(null);
     const [address, setAddress] = useState('');
+    const [outroAddress, setOutroAddress] = useState('');
 
     useEffect(() => {
         getUser();
@@ -63,6 +64,9 @@ const NewTicket = () => {
         if(location) {
             data.append('lat', location.coords.latitude);
             data.append('lon', location.coords.longitude);
+        }
+        else if (itemPick.endereco === 'outro') {
+            data.append('endereco', outroAddress);
         }
         else {
             data.append('endereco', cliente.address);
@@ -107,7 +111,12 @@ const NewTicket = () => {
         }
     }
 
+    const getOutroAddress = (texto) => {
+        setOutroAddress(texto);
+    }
+
     useEffect(() => {
+        
         getGeolocationAsync();
     }, [itemPick]);
 
@@ -241,8 +250,19 @@ const NewTicket = () => {
                     {/* <Picker.Item label="Selecione um Endereço" value="select" color="grey"/> */}
                     <Picker.Item label="Geolocalização" value="geolocalizacao" />
                     <Picker.Item label={address} value="endereco" />
+                    <Picker.Item label={"Outro"} value="outro" />
 
                 </Picker>
+
+                { 
+                    itemPick.endereco === 'outro' ? <TextInput 
+                    style={styles.TextInput}
+                    placeholder="Endereço"
+                    placeholderTextColor={colors.purpleLight}
+                    value={outroAddress}
+                    onChangeText={getOutroAddress} /> : null
+                
+                }
 
 
                 <TouchableOpacity

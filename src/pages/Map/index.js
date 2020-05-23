@@ -26,11 +26,20 @@ const Map = () => {
         Linking.openURL(url);
     }
 
+    const navigateToIndex = () => {
+        navigation.reset({
+            routes: [{name: 'Lista Chamado'}]
+        })
+    }
+
     const navigateToFinished = async () => {
         const response = await api.put(`/chamado/${id}`, {
             status: "Fechado"
           });
-        navigation.navigate('Chamado Finalizado');
+         navigation.reset({
+             routes: [{name: 'Chamado Finalizado'}],
+         })
+        // navigation.navigate('Chamado Finalizado');
     }
     
   return (
@@ -65,7 +74,7 @@ const Map = () => {
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={() => navigation.goBack()}
+                    onPress={() => navigateToIndex()}
                 >
                     <View style={styles.InputBtn}>
                         <Text style={styles.TextBtn}>Voltar</Text>

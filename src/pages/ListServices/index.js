@@ -56,6 +56,13 @@ const ListServices = () => {
         })
     }
 
+    const navigateToProviderEvaluation = (providerId, chamadoId) => {
+        navigation.navigate('Avaliacao', {
+            providerId: providerId,
+            chamadoId: chamadoId
+        });
+    }
+
     const removeHistory = async (keyToRemove) => {
         const response = await api.put(`/chamado/${keyToRemove}`, {status: "Fechado"});
         const arr = history;
@@ -110,6 +117,15 @@ const ListServices = () => {
                             <Text style={styles.TypesText}>Titulo:</Text>
                             <Text style={styles.TypesDesc}>{historico.item.titulo}</Text>
                         </View>
+                        {
+                            historico.item.status === 'Fechado' && !historico.item.avaliado ?
+                            <TouchableOpacity
+                                style={styles.avaliationBtn} 
+                                onPress={() => navigateToProviderEvaluation(historico.item.prestador, historico.item._id)}   
+                            >
+                                <Text style={styles.avaliationBtnTxt}>Avaliar</Text>
+                            </TouchableOpacity> : <View style={styles.blankView}></View>
+                        }
                         <Text style={styles.Status}>{historico.item.status}</Text>
                     </CardHistoryService>
                 )}

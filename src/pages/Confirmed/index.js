@@ -13,8 +13,8 @@ const Confirmed = () => {
     const route = useRoute();
     const {geolocation: location} = route.params;
 
-    const navigateToMap = () => {
-        navigation.navigate('Avaliacao', {
+    const navigateToListService = () => {
+        navigation.navigate('Lista de Servicos', {
             geolocation: location
         })
     }
@@ -43,7 +43,7 @@ const Confirmed = () => {
              */}
             <View style={styles.boxModelBtn}>
                 <TouchableOpacity
-                    onPress={navigateToMap}
+                    onPress={navigateToListService}
                 >
                     <View style={styles.InputBtn}>
                         <Text style={styles.TextBtn}>Voltar</Text>
