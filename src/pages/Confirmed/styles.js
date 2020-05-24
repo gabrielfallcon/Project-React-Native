@@ -42,22 +42,24 @@ export default StyleSheet.create({
     boxModelBtn: {
         width: '100%',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     ModelBtn:{
         width: '100%',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     InputBtn: {
         width: 120,
-        padding: 10,
+        height: 50,
+        padding: 5,
         borderRadius: 10,
         backgroundColor: colors.purpleLight,
+
     },
     TextBtn: {
         fontSize: 22,
         color: colors.white,
-        textAlign: 'center'
+        textAlign: 'center',
     }
 })

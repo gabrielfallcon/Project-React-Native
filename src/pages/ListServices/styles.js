@@ -37,7 +37,7 @@ export default StyleSheet.create({
         marginTop: 10
     },
     TitleServices:{
-        fontSize: 20,
+        fontSize: 18,
         marginBottom: 30,
         marginTop: 40,
         color: colors.purpleLight,
@@ -75,8 +75,9 @@ export default StyleSheet.create({
     },
     HistoryContainer: {
         width: '100%', 
-        height: 230, 
+        height: 200, 
         justifyContent: 'center',
+
     },
     emptyHistoryContainer: {
         justifyContent: 'center',
@@ -104,7 +105,9 @@ export default StyleSheet.create({
     Close: {
         width: 30,
         height: 30,
-        backgroundColor: '#c53030',
+        paddingRight: 10,
+        paddingTop: 10,
+        backgroundColor: 'transparent',
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 50,
@@ -133,8 +136,10 @@ export default StyleSheet.create({
     },
     Status: {
         textAlign: 'center',
-        fontSize: 22,
+        fontSize: 18,
         color: colors.white,
+        marginTop: -30,
+        fontWeight: 'bold'
     },
     avaliationBtn: {
         alignItems: 'center',
