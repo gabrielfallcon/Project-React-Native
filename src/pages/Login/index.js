@@ -5,7 +5,9 @@ import { useNavigation } from '@react-navigation/native';
 
 import colors from '../../assets/var/colors'
 
-import fundo from '../../assets/images/fundo-constructor.jpg'
+import logo from '../../assets/images/logo.png'
+
+import fundo from '../../assets/images/fundo3.png'
 
 import styles from './styles';
 import api from '../../services/api';
@@ -81,7 +83,8 @@ const Login = () => {
 
                 <ImageBackground source={fundo} style={styles.logo}>
 
-                <View >
+                <View style={styles.boxLogo}>
+                    <ImageBackground source={logo} style={styles.logoin} />
                     <Text style={styles.TextLogin}>Login</Text>
                 </View>
                 <View style={styles.BoxModelInput}>

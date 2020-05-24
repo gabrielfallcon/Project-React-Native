@@ -24,6 +24,20 @@ export default StyleSheet.create({
         height: '100%',
       
     },
+    boxLogo: {
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 150,
+    },
+    logoin: {
+        flex: 1,
+        resizeMode: "cover",
+        justifyContent: "center",
+        width: 150,
+        height: 150,
+        marginTop: -40
+    },
     TextLogin: {
         fontFamily: 'Roboto',
         fontStyle: 'normal',
