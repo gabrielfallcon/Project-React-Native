@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ImageBackground, TouchableOpacity, 
-    SafeAreaView, FlatList, ScrollView, StyleSheet, AsyncStorage, TouchableHighlight } from 'react-native';
+import { View, Text, ImageBackground, TouchableOpacity, SafeAreaView, 
+    FlatList, ScrollView, AsyncStorage, Image } from 'react-native';
+import Overlay from '../../components/Overlay';
 import CardList from '../../components/CardList';
 import CardService from '../../components/CardService';
 import CardHistoryService from '../../components/CardHistoryService';
@@ -18,8 +19,10 @@ const ListTicket = () => {
     const [tickets, setTickets] = useState([]);
     const [acceptedTickets, setAcceptedTickets] = useState([]);
     const [closedTickets, setClosedTickets] = useState([]);
+    const [showLoading, setShowLoading] = useState(false);
 
     const getTickets = async () => {
+        setShowLoading(true);
         const providerId = await AsyncStorage.getItem('user');
         const tcks = await api.get('/chamados');
         let newTcks = [...tcks.data];
@@ -42,6 +45,7 @@ const ListTicket = () => {
         });
 
         setClosedTickets(clsTickets);
+        setShowLoading(false);
         
     }
 
@@ -70,6 +74,22 @@ const ListTicket = () => {
     
     return (
         <SafeAreaView style={styles.Container}>
+            {
+                showLoading ? 
+                <Overlay style={styles.OverlayContainer}>
+                    <View style={styles.Overlay}>
+                        <Image 
+                            source={require('../../assets/images/logo.png')}
+                            style={styles.OverlayImage}
+                        />
+                        <Text style={styles.OverlayText}>
+                            Carregando...
+                        </Text>
+                    </View>
+                </Overlay> 
+                :
+                null
+            }
             <View style={styles.boxLogo}>
                 <ImageBackground source={logo} style={styles.logo} />
                 <TouchableOpacity 
@@ -100,14 +120,14 @@ const ListTicket = () => {
                                             'Aceitar'
                                         )}
                                     >
-                                        <CardHistoryService>
+                                        <CardHistoryService style={styles.CardHistoryService}>
                                             <View style={styles.Types}>
                                                 <Text style={styles.TypesText}>Titulo:</Text>
-                                                <Text style={styles.TypesDesc}>{aberto.item.titulo}</Text>
+                                                <Text style={styles.TituloDesc} numberOfLines={2}>{aberto.item.titulo}</Text>
                                             </View> 
                                             <View style={styles.Types}>
                                                 <Text style={styles.TypesText}>Descrição:</Text>
-                                                <Text style={styles.TypesDesc}>{aberto.item.descricao}</Text>
+                                                <Text style={styles.TypesDesc} numberOfLines={4}>{aberto.item.descricao}</Text>
                                             </View> 
                                         </CardHistoryService>
                                     </TouchableOpacity>
@@ -134,14 +154,14 @@ const ListTicket = () => {
                                         'Endereço'
                                     )}
                                 >
-                                    <CardHistoryService>
+                                    <CardHistoryService style={styles.CardHistoryService}>
                                         <View style={styles.Types}>
                                             <Text style={styles.TypesText}>Titulo:</Text>
-                                            <Text style={styles.TypesDesc}>{aberto.item.titulo}</Text>
+                                            <Text style={styles.TituloDesc} numberOfLines={2}>{aberto.item.titulo}</Text>
                                         </View>
                                         <View style={styles.Types}>
                                             <Text style={styles.TypesText}>Descrição:</Text>
-                                            <Text style={styles.TypesDesc}>{aberto.item.descricao}</Text>
+                                            <Text style={styles.TypesDesc} numberOfLines={4}>{aberto.item.descricao}</Text>
                                         </View> 
                                     </CardHistoryService>
                                 </TouchableOpacity>
@@ -165,11 +185,11 @@ const ListTicket = () => {
                                 <CardHistoryService style={styles.CardHistoryService}>
                                     <View style={styles.Types}>
                                         <Text style={styles.TypesText}>Titulo:</Text>
-                                        <Text style={styles.TypesDesc}>{aberto.item.titulo}</Text>
+                                        <Text style={styles.TituloDesc} numberOfLines={2}>{aberto.item.titulo}</Text>
                                     </View>
                                     <View style={styles.Types}>
                                         <Text style={styles.TypesText}>Descrição:</Text>
-                                        <Text style={styles.TypesDesc}>{aberto.item.descricao}</Text>
+                                        <Text style={styles.TypesDesc} numberOfLines={4}>{aberto.item.descricao}</Text>
                                     </View> 
                                 </CardHistoryService>
                             )}

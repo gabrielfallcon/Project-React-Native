@@ -14,8 +14,8 @@ const Confirmed = () => {
     const {geolocation: location} = route.params;
 
     const navigateToListService = () => {
-        navigation.navigate('Lista de Servicos', {
-            geolocation: location
+        navigation.reset({
+            routes: [{name: 'Lista de Servicos'}]
         })
     }
 

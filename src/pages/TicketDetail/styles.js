@@ -177,5 +177,22 @@ export default StyleSheet.create({
     height: '100%',
     width: '80%',
   },
+  OverlayLoading: {
+    height: '100%',
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.secondary,
+
+  },
+  OverlayLoadingImage: {
+      height: '45%',
+      width: '45%',
+  },
+  OverlayLoadingText: {
+      color: colors.purpleDark,
+      fontFamily: 'Roboto',
+      fontSize: 32,
+  }
   
 });

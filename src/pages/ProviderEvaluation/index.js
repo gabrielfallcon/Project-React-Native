@@ -40,7 +40,9 @@ const ProviderEvaluation = () => {
             vote: vote,
         }).catch(err => console.log(err))
 
-        navigation.navigate('Lista de Servicos');
+        navigation.reset({
+            routes: [{name: 'Lista de Servicos'}]
+        })
     }
 
     return(

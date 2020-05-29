@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, 
   Image, AsyncStorage, FlatList, SafeAreaView } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 import styles from './styles'
 import FileCard from '../../components/FileCard'
@@ -16,6 +16,7 @@ const TicketDetail = () => {
   const [service, setService] = useState({});
   const [showImage, setShowImage] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
+  const [showLoading, setShowLoading] = useState(false);
 
   const navigateToMap = async () => {
     const providerId = await AsyncStorage.getItem('user');
@@ -45,10 +46,12 @@ const TicketDetail = () => {
   }
 
   const getTicket = async () => {
+    setShowLoading(true);
     const tck = await api.get(`/chamado/${id}`);
     const svc = await api.get(`/services/${tck.data.servico}`);
     setTicket(tck.data);
     setService(svc.data);
+    setShowLoading(false);
   }
 
   useEffect(() => {
@@ -71,110 +74,141 @@ const TicketDetail = () => {
       contentContainerStyle={styles.Container}
       nestedScrollEnabled={true}
     >
-       {
-          showImage ? 
-          <Overlay>
-            <View style={styles.OverlayButtonContainer}>
-              <TouchableOpacity 
-                style={styles.OverlayButton}
-                onPress={handleCloseImage}
-              >
-                <Text style={styles.OverlayButtonText}>X</Text>
-              </TouchableOpacity>
+      {
+        showLoading ? 
+        <Overlay style={styles.OverlayContainer}>
+            <View style={styles.OverlayLoading}>
+                <Image 
+                    source={require('../../assets/images/logo.png')}
+                    style={styles.OverlayLoadingImage}
+                />
+                <Text style={styles.OverlayLoadingText}>
+                    Carregando...
+                </Text>
             </View>
-            <View style={styles.OverlayImageContainer}>
-              <Image 
-                source={{uri: imageUrl}}
-                style={styles.OverlayImage}
-                resizeMode='contain'
-              />
-            </View>
-          </Overlay>
-          : null
+        </Overlay> 
+        :
+        null
       }
-        <View style={styles.TipoLabelContainer}>
+
+      {
+        showImage ? 
+        <Overlay>
+          <View style={styles.OverlayButtonContainer}>
+            <TouchableOpacity 
+              style={styles.OverlayButton}
+              onPress={handleCloseImage}
+            >
+              <Text style={styles.OverlayButtonText}>X</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.OverlayImageContainer}>
+            <Image 
+              source={{uri: imageUrl}}
+              style={styles.OverlayImage}
+              resizeMode='contain'
+            />
+          </View>
+        </Overlay>
+        : null
+      }
+      <View style={styles.TipoLabelContainer}>
           <Text style={styles.TipoLabel}>
             Tipo:
           </Text>
-        </View>
-        <View style={styles.TipoTextContainer}>
+      </View>
+      <View style={styles.TipoTextContainer}>
+        <ScrollView nestedScrollEnabled={true} horizontal={true}>
           <Text style={styles.TipoText}>
-           {service.name}
+          {service.name}
           </Text>
-        </View>
-        <View style={styles.TituloLabelContainer}>
-          <Text style={styles.TituloLabel}>
-            Titulo:
-          </Text>
-        </View>
-        <View style={styles.TituloTextContainer}>
+        </ScrollView>
+      </View>
+      <View style={styles.TituloLabelContainer}>
+        <Text style={styles.TituloLabel}>
+          Titulo:
+        </Text>
+      </View>
+      <View style={styles.TituloTextContainer}>
+        <ScrollView 
+          nestedScrollEnabled={true} 
+          horizontal={true} 
+          showsHorizontalScrollIndicator={false}
+        >
           <Text style={styles.TituloText}>
             {ticket.titulo}
           </Text>
-        </View>
-        <View style={styles.DescricaoLabelContainer}>
-          <Text style={styles.DescricaoLabel}>
-            Descrição:
+        </ScrollView>
+      </View>
+      <View style={styles.DescricaoLabelContainer}>
+        <Text style={styles.DescricaoLabel}>
+          Descrição:
+        </Text>
+      </View>
+      <View style={styles.DescricaoTextContainer}>
+        <ScrollView style={styles.DescricaoTextScroll} nestedScrollEnabled={true} >
+          <Text style={styles.DescricaoText}>
+            {ticket.descricao}
           </Text>
-        </View>
-        <View style={styles.DescricaoTextContainer}>
-          <ScrollView style={styles.DescricaoTextScroll} nestedScrollEnabled={true} >
-            <Text style={styles.DescricaoText}>
-              {ticket.descricao}
-            </Text>
-          </ScrollView>
-        </View>
-        <View style={styles.EnderecoLabelContainer}>
-          <Text style={styles.EnderecoLabel}>
-            Endereço:
-          </Text>
-        </View>
-        <View style={styles.EnderecoTextContainer}>
+        </ScrollView>
+      </View>
+      <View style={styles.EnderecoLabelContainer}>
+        <Text style={styles.EnderecoLabel}>
+          Endereço:
+        </Text>
+      </View>
+      <View style={styles.EnderecoTextContainer}>
+        <ScrollView 
+          nestedScrollEnabled={true} 
+          horizontal={true} 
+          showsHorizontalScrollIndicator={false}
+        >
           <Text style={styles.EnderecoText}>
             {
               ticket.endereco ? ticket.endereco : "Nao foi definido endereço"
             }
           </Text>
-        </View>
-        <View style={styles.AnexoLabelContainer}>
-          <Text style={styles.AnexoLabel}>
-            Anexos:
+        </ScrollView>
+      </View>
+      <View style={styles.AnexoLabelContainer}>
+        <Text style={styles.AnexoLabel}>
+          Anexos:
+        </Text>
+      </View>
+      <View style={styles.AnexoItensContainer}>
+        
+          <FlatList 
+            data={ticket.anexoUrl}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            keyExtractor={anexo => anexo}
+            renderItem={anexo => (
+              <TouchableOpacity
+                onPress={() => handleShowImage(anexo.item)}
+              >
+              <FileCard styles={styles.FileCard}> 
+                <Image 
+                  source={{ uri: anexo.item }}
+                  style={styles.FileCardImage}
+                  resizeMode='center'
+                />
+              </FileCard> 
+              </TouchableOpacity>
+            )}
+          />
+            
+        
+      </View>
+      <View style={styles.ButtonContainer}>
+        <TouchableOpacity 
+          style={styles.Button}
+          onPress={navigateToMap}
+        >
+          <Text style={styles.ButtonText}>
+            {buttonText}
           </Text>
-        </View>
-        <View style={styles.AnexoItensContainer}>
-          
-            <FlatList 
-              data={ticket.anexoUrl}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              keyExtractor={anexo => anexo}
-              renderItem={anexo => (
-                <TouchableOpacity
-                  onPress={() => handleShowImage(anexo.item)}
-                >
-                <FileCard styles={styles.FileCard}> 
-                  <Image 
-                    source={{ uri: anexo.item }}
-                    style={styles.FileCardImage}
-                    resizeMode='center'
-                  />
-                </FileCard> 
-                </TouchableOpacity>
-              )}
-            />
-             
-         
-        </View>
-        <View style={styles.ButtonContainer}>
-          <TouchableOpacity 
-            style={styles.Button}
-            onPress={navigateToMap}
-          >
-            <Text style={styles.ButtonText}>
-              {buttonText}
-            </Text>
-          </TouchableOpacity>
-        </View>
+        </TouchableOpacity>
+      </View>
     </ScrollView>
   );
 }

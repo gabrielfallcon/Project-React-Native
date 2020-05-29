@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ImageBackground, TouchableOpacity, 
-    SafeAreaView, FlatList, ScrollView, StyleSheet, Alert, Button, 
-    AsyncStorage } from 'react-native';
+import { View, Text, ImageBackground, TouchableOpacity, SafeAreaView, FlatList, 
+    ScrollView, Alert, AsyncStorage, Image, TextInput } from 'react-native';
 
 import CardList from '../../components/CardList';
 import CardService from '../../components/CardService';
 import CardHistoryService from '../../components/CardHistoryService';
+import Overlay from '../../components/Overlay';
 import { useNavigation } from '@react-navigation/native';
 
 import api from '../../services/api'
@@ -21,10 +21,13 @@ const ListServices = () => {
 
     const [services, setServices] = useState([]);
     const [history, setHistory] = useState([]);
+    const [showLoading, setShowLoading] = useState(false);
 
     const loadServices = async () => {
+        setShowLoading(true);
         const response = await api.get('/services');
         setServices(response.data);
+        
     }
 
     const loadChamadosByUser = async () => {
@@ -40,6 +43,9 @@ const ListServices = () => {
             )
         );
         setHistory(dataChamado);
+        setShowLoading(false);
+        
+        
     }
 
     useEffect(() => {
@@ -111,14 +117,16 @@ const ListServices = () => {
                         </TouchableOpacity>
                         <View style={styles.Types}>
                             <Text style={styles.TypesText}>Tipo:</Text>
-                            <Text style={styles.TypesDesc}>{historico.item.serviceName}</Text>
+                            <Text style={styles.TypesDesc} numberOfLines={1} ellipsizeMode="middle">{historico.item.serviceName}</Text>
                         </View>
                         <View style={styles.Types}>
                             <Text style={styles.TypesText}>Titulo:</Text>
-                            <Text style={styles.TypesDesc}>{historico.item.titulo}</Text>
+                            <Text style={styles.TypesDesc} numberOfLines={2}>{historico.item.titulo}</Text>
                         </View>
                         {
-                            historico.item.status === 'Fechado' && !historico.item.avaliado ?
+                            historico.item.status === 'Fechado' && 
+                            historico.item.avaliado !== true &&
+                            historico.item.prestador ?
                             <TouchableOpacity
                                 style={styles.avaliationBtn} 
                                 onPress={() => navigateToProviderEvaluation(historico.item.prestador, historico.item._id)}   
@@ -157,6 +165,22 @@ const ListServices = () => {
 
     return (
         <SafeAreaView style={styles.Container}>
+            {
+                showLoading ? 
+                <Overlay style={styles.OverlayContainer}>
+                    <View style={styles.Overlay}>
+                        <Image 
+                            source={require('../../assets/images/logo.png')}
+                            style={styles.OverlayImage}
+                        />
+                        <Text style={styles.OverlayText}>
+                            Carregando...
+                        </Text>
+                    </View>
+                </Overlay> 
+                :
+                null
+            }
             <View style={styles.boxLogo}>
                 <ImageBackground source={logo} style={styles.logo} />
                 <TouchableOpacity 

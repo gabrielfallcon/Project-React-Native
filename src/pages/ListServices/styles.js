@@ -122,15 +122,18 @@ export default StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        height: '25%',
         marginBottom: 20,
     },
     TypesText: {
         width: '50%',
+        height: '100%',
         fontSize: 20,
         color: colors.white
     },
     TypesDesc: {
         width: '50%',
+        height: '100%',
         fontSize: 14,
         color: colors.secondary
     },
@@ -157,5 +160,22 @@ export default StyleSheet.create({
     },
     blankView: {
         marginBottom: 46,
+    },
+    Overlay: {
+        height: '100%',
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: colors.secondary,
+
+    },
+    OverlayImage: {
+        height: '45%',
+        width: '45%',
+    },
+    OverlayText: {
+        color: colors.purpleDark,
+        fontFamily: 'Roboto',
+        fontSize: 32,
     }
 })

@@ -6,7 +6,7 @@ import colors from '../assets/var/colors'
 const CardHistoryService = (props) => {
 
     return(
-        <View style={{...styles.BoxHistory, ...props.styles}}>
+        <View style={{...styles.BoxHistory, ...props.style}}>
             {props.children}
         </View>
     )

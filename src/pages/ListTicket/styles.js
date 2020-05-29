@@ -104,6 +104,9 @@ export default StyleSheet.create({
         color: colors.primary,
         textAlign: 'center'
     },
+    CardHistoryService: {
+        height: 180,
+    },
 
     Types: {
         flexDirection: 'row',
@@ -113,12 +116,36 @@ export default StyleSheet.create({
     },
     TypesText: {
         width: '50%',
+        height: '100%',
         fontSize: 18,
         color: colors.white
+    },
+    TituloDesc: {
+        width: '50%',
+        height: 40,
+        fontSize: 14,
+        color: colors.secondary
     },
     TypesDesc: {
         width: '50%',
         fontSize: 14,
         color: colors.secondary
     },
+    Overlay: {
+        height: '100%',
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: colors.secondary,
+
+    },
+    OverlayImage: {
+        height: '45%',
+        width: '45%',
+    },
+    OverlayText: {
+        color: colors.purpleDark,
+        fontFamily: 'Roboto',
+        fontSize: 32,
+    }
 })
